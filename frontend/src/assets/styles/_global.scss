@@ -1,0 +1,61 @@
+@import "variables";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content-container {
+  flex: 1 0 auto;
+}
+.footer-content {
+  flex: 0 0 auto;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1240px;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: $main-blue-color;
+  color: rgb(255, 255, 255);
+  font-family: Montserrat, sans-serif;
+}
+
+.input {
+  border: 2px solid $main-blue-color;
+  color: $main-blue-color;
+  padding: 20px;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 3px;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: rgb(168, 171, 167);
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}

@@ -1,0 +1,43 @@
+@import "../../../assets/styles/variables";
+
+.swiper-slide {
+  //height: 500px;
+  display: flex;
+  align-items: center;
+
+  .text-block {
+    height: 100%;
+    background-color: $main-blue-color;
+  }
+}
+
+
+//.text-block {
+//  position: relative; // Для псевдоэлемента внутри текста
+//  padding: 20px; // Отступы внутри блока
+//  background: white; // Цвет фона текстового блока
+//  border-radius: 20px; // Скругление углов
+//  z-index: 1; // Псевдоэлемент будет ниже по стеку
+//
+//  // Добавляем круглый псевдоэлемент
+//  //&::before {
+//  //  content: '';
+//  //  position: absolute;
+//  //  top: 0;
+//  //  left: -50%; // Сдвигаем влево, чтобы создать эффект "непомеченного" круга
+//  //  width: 200%; // Ширина круга
+//  //  height: 200%; // Высота круга
+//  //  background: rgba(255, 255, 255, 0); // Прозрачный фон
+//  //  border-radius: 50%;
+//  //  border: 10px solid white; // Цвет и толщина границы, например, белый
+//  //  z-index: -1; // Псевдоэлемент под текстом
+//  //}
+//}
+//
+//.image-block {
+//
+//  img {
+//    max-width: 100%;
+//    height: auto; // Гибкая ширина и высота
+//  }
+//}

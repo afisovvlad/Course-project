@@ -1,0 +1,44 @@
+<section class="auth">
+  <div class="container">
+    <div class="auth-content">
+      <div class="auth-title">
+        Войти в личный кабинет
+      </div>
+
+      <form class="auth-form" [formGroup]="loginForm">
+        <input class="input" type="text" placeholder="Электронная почта" formControlName="email"
+               [ngStyle]="{'border-color': loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty) ? 'red' : ''}">
+        @if (loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)) {
+          <div class="text-danger">
+            Это поле обязательно к заполнению
+          </div>
+        }
+
+        <input class="input last-input" type="text" placeholder="Пароль" formControlName="password"
+               [ngStyle]="{'border-color': loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty) ? 'red' : ''}">
+        @if (loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)) {
+          <div class="text-danger text-danger-last">
+            Это поле обязательно к заполнению
+          </div>
+        }
+
+        <label for="agree">
+          <input type="checkbox" id="agree" formControlName="rememberMe">
+          <span>Запомнить меня</span>
+        </label>
+      </form>
+
+      <button class="button auth-button" (click)="login()">
+        Войти
+      </button>
+
+      <div class="auth-additional-text">
+        Нет аккаунта?&nbsp; <a routerLink="/signup">Пройдите регистрацию</a>
+      </div>
+    </div>
+
+    <div class="auth-image">
+      <img src="/images/signup-image.png" alt="">
+    </div>
+  </div>
+</section>

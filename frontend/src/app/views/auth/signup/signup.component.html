@@ -1,0 +1,70 @@
+<section class="auth">
+  <div class="container">
+    <div class="auth-content">
+      <div class="auth-title">
+        Регистрация на сайте
+      </div>
+
+      <form class="auth-form" [formGroup]="signupForm">
+        <input class="input" type="text" placeholder="Ваше имя" formControlName="name"
+               [ngStyle]="{'border-color': signupForm.get('name')?.invalid && (signupForm.get('name')?.touched || signupForm.get('name')?.dirty) ? 'red' : ''}">
+        @if (signupForm.get('name')?.invalid && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)) {
+          <div class="text-danger">
+            Это поле обязательно к заполнению
+          </div>
+        }
+
+        <input class="input" type="text" placeholder="Электронная почта" formControlName="email"
+               [ngStyle]="{'border-color': signupForm.get('email')?.invalid && (signupForm.get('email')?.touched || signupForm.get('email')?.dirty) ? 'red' : ''}">
+        @if (signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)) {
+          @if (signupForm.get('email')?.hasError('required')) {
+            <div class="text-danger">
+              Это поле обязательно к заполнению
+            </div>
+          } @else if (signupForm.get('email')?.hasError('email')) {
+            <div class="text-danger">
+              Введите корректный адрес электронной почты
+            </div>
+          }
+        }
+
+        <input class="input last-input" type="text" placeholder="Пароль" formControlName="password"
+               [ngStyle]="{'border-color': signupForm.get('password')?.invalid && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty) ? 'red' : ''}">
+
+        @if (signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)) {
+          @if (signupForm.get('password')?.hasError('required')) {
+            <div class="text-danger text-danger-last">
+              Это поле обязательно к заполнению
+            </div>
+          } @else if (signupForm.get('password')?.hasError('pattern')) {
+            <div class="text-danger text-danger-last">
+              Пароль должен содержать минимум 8 символов, одну строчную латинскую букву, одну заглавную букву, цифру
+            </div>
+          }
+        }
+
+        <label for="agree">
+          <input type="checkbox" id="agree" formControlName="agree">
+          Я принимаю <span>условия пользовательского соглашения</span> и даю <span>согласие на обработку персональных данных</span>.
+          @if (signupForm.get('agree')?.invalid && (signupForm.get('agree')?.dirty || signupForm.get('agree')?.touched)) {
+            <div class="text-danger">
+              Это поле обязательно к заполнению
+            </div>
+          }
+        </label>
+      </form>
+
+      <button class="button auth-button" (click)="signup()">
+        Зарегистрироваться
+      </button>
+
+       <div class="auth-additional-text">
+        Уже есть аккаунт?&nbsp; <a routerLink="/login">Войдите</a>
+      </div>
+    </div>
+
+    <div class="auth-image">
+      <img src="/images/signup-image.png" alt="">
+    </div>
+  </div>
+</section>
