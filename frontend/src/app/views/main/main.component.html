@@ -5,38 +5,153 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="text-block">
-              <div class="mini-title">
+              <div class="first-mini-title-slider">
                 Предложение месяца
               </div>
 
-              <div class="main-title">
+              <div class="main-title-slider">
                 Продвижение в Instagram для вашего бизнеса <span>-15%</span>!
               </div>
 
-              <div class="button slide-button">
+              <button class="button slide-button">
                 Подробнее
-              </div>
+              </button>
             </div>
 
             <div class="image-block">
               <img src="/images/slider-image-1.png" alt="">
             </div>
           </div>
-
           <div class="swiper-slide">
+            <div class="text-block">
+              <div class="first-mini-title-slider">
+                Акция
+              </div>
 
+              <div class="main-title-slider">
+                Нужен грамотный <span>копирайтер</span>?
+              </div>
+
+              <div class="second-mini-title-slider">
+                Весь декабрь у нас действует акция на работу копирайтера.
+              </div>
+
+              <button class="button slide-button">
+                Подробнее
+              </button>
+            </div>
+
+            <div class="image-block">
+              <img src="/images/slider-image-2.png" alt="">
+            </div>
           </div>
-
           <div class="swiper-slide">
+            <div class="text-block">
+              <div class="first-mini-title-slider">
+                Новость дня
+              </div>
 
+              <div class="main-title-slider">
+                <span>6 место</span>в ТОП-10 SMM-агенств Москвы!
+              </div>
+
+              <div class="second-mini-title-slider">
+                Мы благодарим каждого, кто голосовал за нас!
+              </div>
+
+              <button class="button slide-button">
+                Подробнее
+              </button>
+            </div>
+
+            <div class="image-block">
+              <img src="/images/slider-image-3.png" alt="">
+            </div>
           </div>
         </div>
         <div class="swiper-pagination"></div>
 
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
+      </div>
+    </section>
 
-        <div class="swiper-scrollbar"></div>
+    <section class="services">
+      <div class="services-title">
+        Услуги, которые мы предлагаем
+      </div>
+
+      <div class="services-items">
+        @for (service of servicesArr; track service) {
+          <app-article-card [service]="service"></app-article-card>
+        }
+      </div>
+    </section>
+
+    <section class="advantages">
+        <div class="advantages-image">
+          <img src="/images/advantages-image.png" alt="">
+        </div>
+
+        <div class="advantages-content">
+          <div class="advantages-title">
+            Кто мы и чем мы занимаемся?
+          </div>
+
+          <div class="advantages-description">
+            <span>АйтиШторм</span> — это ваш помощник №1 при решении таких вопросов, как продвижение в сети, разработка сайтов для бизнеса и личного бренда, сторисмейкинг, копирайтинг, маркетинг, разработка визуальной концепции и создание инфопродуктов. Компания была основана в 2019 году и за всё это время смогла выйти в ТОП-10 агенств, предлагающих услуги продвижения в сети.
+          </div>
+
+          <div class="advantages-items">
+            <div class="advantages-items-title">
+              Наши преимущества
+            </div>
+
+            <div class="advantages-items-content">
+              <div class="advantages-item">
+                <div class="advantages-item-number">
+                  <span>1</span>
+                </div>
+
+                <div class="advantages-item-text">
+                  <span>Мастерски вовлекаем аудиторию процесс.</span> Мы увеличиваем процент вовлечённости за короткий промежуток времени.
+                </div>
+              </div>
+              <div class="advantages-item">
+                <div class="advantages-item-number">
+                  <span>2</span>
+                </div>
+
+                <div class="advantages-item-text">
+                  <span>Разрабатываем бомбическую визуальную концепцию.</span> Наши специалисты знают как создать уникальный образ вашего проекта.
+                </div>
+              </div>
+              <div class="advantages-item">
+                <div class="advantages-item-number">
+                  <span>3</span>
+                </div>
+
+                <div class="advantages-item-text">
+                  <span>Создаём мощные воронки с помощью текстов.</span>  Наши копирайтеры создают не только вкусные текста, но и классные воронки.
+                </div>
+              </div>
+              <div class="advantages-item">
+                <div class="advantages-item-number">
+                  <span>4</span>
+                </div>
+
+                <div class="advantages-item-text">
+                  <span>Помогаем продавать больше.</span>   Мы не только помогаем разработать стратегию по продажам, но также корректируем её под нужды заказчика.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+     </section>
+
+    <section class="popular-articles">
+      <div class="popular-articles-title">
+        Популярные статьи из блога
       </div>
     </section>
   </div>

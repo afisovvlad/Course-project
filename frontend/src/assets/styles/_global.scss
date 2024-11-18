@@ -20,6 +20,7 @@ body {
 .content-container {
   flex: 1 0 auto;
 }
+
 .footer-content {
   flex: 0 0 auto;
 }
@@ -40,6 +41,7 @@ button {
   background-color: $main-blue-color;
   color: rgb(255, 255, 255);
   font-family: Montserrat, sans-serif;
+  cursor: pointer;
 }
 
 .input {
@@ -58,4 +60,22 @@ button {
     font-size: 14px;
     font-weight: 400;
   }
+}
+
+.swiper-pagination {
+  --swiper-pagination-color: #fff;
+  --swiper-pagination-bullet-horizontal-gap: 14px;
+  --swiper-pagination-progressbar-bg-color: #fff;
+  --swiper-pagination-bullet-size: 11px;
+  --swiper-pagination-bullet-inactive-color: transparent;
+  --swiper-pagination-bullet-inactive-opacity: 1;
+
+  .swiper-pagination-bullet {
+    border: 2px solid rgb(255, 255, 255);
+  }
+}
+
+.swiper-button-prev, .swiper-button-next {
+  --swiper-navigation-size: 25px;
+  --swiper-navigation-color: #fff;
 }

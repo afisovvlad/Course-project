@@ -1,0 +1,27 @@
+<div class="card-item">
+  <div class="card-item-image">
+    <img src="{{service?.image}}" alt="">
+  </div>
+
+  <div class="card-item-title">
+    {{service?.title}}
+  </div>
+
+  <div class="card-item-description">
+    {{service?.description}}
+  </div>
+
+  <div class="card-item-actions">
+    @if (!articleCard) {
+      <div class="services-item-actions-price">
+        {{service?.price}}
+      </div>
+
+      <button class="button card-item-actions-button">
+        Подробнее
+      </button>
+    } @else {
+      <a routerLink="" class="card-item-actions-continue">Читать дальше</a>
+    }
+  </div>
+</div>
