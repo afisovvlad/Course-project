@@ -1,9 +1,8 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
+import {AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
 import Swiper from 'swiper/bundle';
 import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css/bundle';
-// import 'swiper/css/navigation/bundle';
-// import 'swiper/css/pagination/bundle';
+import 'swiper/swiper-bundle.css'
+
 import {ArticleCardComponent} from '../../shared/components/article-card/article-card.component';
 import {ServiceType} from '../../../types/service.type';
 
@@ -17,7 +16,7 @@ import {ServiceType} from '../../../types/service.type';
   styleUrl: './main.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class MainComponent  implements OnInit{
+export class MainComponent  implements OnInit {
   swiper!: Swiper;
 
   servicesArr: ServiceType[] = [
@@ -67,5 +66,7 @@ export class MainComponent  implements OnInit{
         prevEl: '.swiper-button-prev',
       },
     });
+
+
   }
 }

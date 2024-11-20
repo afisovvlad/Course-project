@@ -1,20 +1,20 @@
 <div class="card-item">
   <div class="card-item-image">
-    <img src="{{service?.image}}" alt="">
+    <img src="{{serviceCard?.image}}" alt="">
   </div>
 
   <div class="card-item-title">
-    {{service?.title}}
+    {{serviceCard?.title}}
   </div>
 
   <div class="card-item-description">
-    {{service?.description}}
+    {{serviceCard?.description}}
   </div>
 
   <div class="card-item-actions">
-    @if (!articleCard) {
-      <div class="services-item-actions-price">
-        {{service?.price}}
+    @if (!isArticleCard) {
+      <div class="card-item-actions-price">
+        {{serviceCard?.price}}
       </div>
 
       <button class="button card-item-actions-button">

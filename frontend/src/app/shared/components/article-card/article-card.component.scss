@@ -1,0 +1,54 @@
+@import "../../../../assets/styles/variables";
+
+.card-item {
+  width: 291px;
+
+  .card-item-image {
+    margin-bottom: 15px;
+  }
+
+  .card-item-title {
+    color: $main-blue-color;
+    font-family: Montserrat, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .card-item-description {
+    color: $main-dark-color;
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+    margin-bottom: 10px;
+    height: 90px;
+  }
+
+  .card-item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .card-item-actions-price {
+      color: $main-blue-color;
+      font-family: Montserrat, sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .card-item-actions-button {
+      width: 163px;
+      padding: 15px 0;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .card-item-actions-continue {
+      color: $main-blue-color;
+      font-family: Montserrat, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+}

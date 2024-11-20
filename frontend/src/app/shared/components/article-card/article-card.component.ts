@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ServiceType} from '../../../../types/service.type';
 import {RouterLink} from '@angular/router';
 
@@ -11,13 +11,15 @@ import {RouterLink} from '@angular/router';
   templateUrl: './article-card.component.html',
   styleUrl: './article-card.component.scss'
 })
-export class ArticleCardComponent {
-  articleCard: boolean = true;
+export class ArticleCardComponent implements OnInit{
+  isArticleCard: boolean = true;
 
-  @Input() service?: ServiceType;
+  @Input() serviceCard: ServiceType | null = null;
 
   constructor() {
-    this.articleCard = !this.service;
   }
 
+  ngOnInit() {
+    this.isArticleCard = !this.serviceCard;
+  }
 }
