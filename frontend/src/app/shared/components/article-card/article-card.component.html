@@ -1,27 +1,35 @@
 <div class="card-item">
-  <div class="card-item-image">
-    <img src="{{serviceCard?.image}}" alt="">
-  </div>
+  @if (!isArticleCard) {
+    <div class="card-item-image">
+      <img src="{{serviceCard?.image}}" alt="">
+    </div>
+  } @else {
+    <div class="card-item-image" style="background-image: url({{ environment.serverStaticPath + article?.image}})"></div>
+  }
 
-  <div class="card-item-title">
-    {{serviceCard?.title}}
-  </div>
+    @if (!isArticleCard) {
+      <div class="card-item-title service-card-item-title">{{ serviceCard?.title }}</div>
+    } @else {
+      <div class="card-item-title article-card-item-title">{{ article?.title }}</div>
+    }
 
-  <div class="card-item-description">
-    {{serviceCard?.description}}
-  </div>
+    @if (!isArticleCard) {
+      <div class="card-item-description service-card-item-description">{{ serviceCard?.description }}</div>
+    } @else {
+      <div class="card-item-description article-card-item-description">{{ article?.description }}</div>
+    }
 
   <div class="card-item-actions">
     @if (!isArticleCard) {
       <div class="card-item-actions-price">
-        {{serviceCard?.price}}
+        {{ serviceCard?.price }}
       </div>
 
-      <button class="button card-item-actions-button">
+      <button class="button card-item-actions-button" (click)="detailsService(serviceCard!.title)">
         Подробнее
       </button>
     } @else {
-      <a routerLink="" class="card-item-actions-continue">Читать дальше</a>
+      <a [routerLink]="'articles/' + article?.url" class="card-item-actions-continue">Читать дальше</a>
     }
   </div>
 </div>

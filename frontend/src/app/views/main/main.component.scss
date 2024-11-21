@@ -196,5 +196,104 @@
         }
       }
     }
+
+    .popular-articles {
+      padding-bottom: 120px;
+
+      .popular-articles-title {
+        color: $main-blue-color;
+        font-family: Lora, sans-serif;
+        font-size: 38px;
+        font-weight: 400;
+        margin-bottom: 40px;
+      }
+
+      .popular-articles-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .go-blog {
+        text-align: right;
+        color: $main-blue-color;
+        font-family: Montserrat, sans-serif;
+        font-size: 20px;
+        font-weight: 500;
+
+        span {
+          position: relative;
+          top: 2px;
+          margin-left: 14px;
+        }
+
+      }
+    }
+  }
+}
+
+.service-dialog {
+  padding: 94px 153px 86px 152px;
+  position: relative;
+  min-width: 727px;
+  border: 2px solid $main-blue-color;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  text-align: center;
+
+  .dialog-title {
+    color: $main-blue-color;
+    font-family: Lora, sans-serif;
+    font-size: 38px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .service-dialog-description {
+    margin-bottom: 40px;
+    color: rgb(30, 26, 43);
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .successful-request-button {
+    padding: 10px;
+    width: 73px;
+    font-family: Montserrat, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .dialog-form {
+    display: flex;
+    flex-direction: column;
+    width: 422px;
+    margin-bottom: 20px;
+    gap: 5px;
+
+    .input {
+      outline: 0;
+      width: 100%;
+    }
+  }
+
+  .dialog-button {
+    width: 422px;
+    padding: 15px 0;
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .dialog-close {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    background-color: rgb(255, 255, 255);
+    outline: 0;
+    border: 0;
+    cursor: pointer;
   }
 }

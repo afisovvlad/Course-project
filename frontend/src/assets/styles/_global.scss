@@ -34,7 +34,7 @@ a {
   text-decoration: none;
 }
 
-button {
+.button {
   border: none;
   outline: none;
   border-radius: 5px;
@@ -78,4 +78,20 @@ button {
 .swiper-button-prev, .swiper-button-next {
   --swiper-navigation-size: 25px;
   --swiper-navigation-color: #fff;
+}
+
+.mat-mdc-dialog-surface {
+  overflow-y: unset !important;
+}
+
+.text-danger {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: red;
+  margin-bottom: 5px;
+
+  &.text-danger-last {
+    margin-bottom: 10px;
+  }
 }

@@ -38,18 +38,6 @@
           //}
         }
 
-        .text-danger {
-          font-family: Montserrat, sans-serif;
-          font-weight: 400;
-          font-size: 14px;
-          color: red;
-          margin-bottom: 5px;
-
-          &.text-danger-last {
-            margin-bottom: 10px;
-          }
-        }
-
         label {
           color: $main-dark-color;
           font-family: Montserrat, sans-serif;

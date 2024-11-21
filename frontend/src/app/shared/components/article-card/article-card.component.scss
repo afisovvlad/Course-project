@@ -4,7 +4,12 @@
   width: 291px;
 
   .card-item-image {
+    height: 291px;
+    width: 291px;
     margin-bottom: 15px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
   }
 
   .card-item-title {
@@ -12,7 +17,13 @@
     font-family: Montserrat, sans-serif;
     font-size: 20px;
     font-weight: 500;
+    line-height: 130%;
     margin-bottom: 10px;
+
+    &.article-card-item-title {
+      height: 78px;
+      margin-bottom: 20px;
+    }
   }
 
   .card-item-description {
@@ -23,6 +34,11 @@
     line-height: 130%;
     margin-bottom: 10px;
     height: 90px;
+
+    &.article-card-item-description {
+      height: 130px;
+      margin-bottom: 20px;
+    }
   }
 
   .card-item-actions {
@@ -49,6 +65,8 @@
       font-family: Montserrat, sans-serif;
       font-size: 16px;
       font-weight: 400;
+      border-bottom: 1px solid $main-blue-color;
+      line-height: 1;
     }
   }
 }

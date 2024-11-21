@@ -83,76 +83,175 @@
 
       <div class="services-items">
         @for (service of servicesArr; track service) {
-          <app-article-card [serviceCard]="service"></app-article-card>
+          <app-article-card (detailServiceCategory)="showModalService($event)"
+                            [serviceCard]="service"></app-article-card>
         }
       </div>
     </section>
 
     <section class="advantages">
-        <div class="advantages-image">
-          <img src="/images/advantages-image.png" alt="">
+      <div class="advantages-image">
+        <img src="/images/advantages-image.png" alt="">
+      </div>
+
+      <div class="advantages-content">
+        <div class="advantages-title">
+          Кто мы и чем мы занимаемся?
         </div>
 
-        <div class="advantages-content">
-          <div class="advantages-title">
-            Кто мы и чем мы занимаемся?
+        <div class="advantages-description">
+          <span>АйтиШторм</span> — это ваш помощник №1 при решении таких вопросов, как продвижение в сети, разработка
+          сайтов для бизнеса и личного бренда, сторисмейкинг, копирайтинг, маркетинг, разработка визуальной концепции и
+          создание инфопродуктов. Компания была основана в 2019 году и за всё это время смогла выйти в ТОП-10 агенств,
+          предлагающих услуги продвижения в сети.
+        </div>
+
+        <div class="advantages-items">
+          <div class="advantages-items-title">
+            Наши преимущества
           </div>
 
-          <div class="advantages-description">
-            <span>АйтиШторм</span> — это ваш помощник №1 при решении таких вопросов, как продвижение в сети, разработка сайтов для бизнеса и личного бренда, сторисмейкинг, копирайтинг, маркетинг, разработка визуальной концепции и создание инфопродуктов. Компания была основана в 2019 году и за всё это время смогла выйти в ТОП-10 агенств, предлагающих услуги продвижения в сети.
-          </div>
+          <div class="advantages-items-content">
+            <div class="advantages-item">
+              <div class="advantages-item-number">
+                <span>1</span>
+              </div>
 
-          <div class="advantages-items">
-            <div class="advantages-items-title">
-              Наши преимущества
+              <div class="advantages-item-text">
+                <span>Мастерски вовлекаем аудиторию процесс.</span> Мы увеличиваем процент вовлечённости за короткий
+                промежуток времени.
+              </div>
             </div>
-
-            <div class="advantages-items-content">
-              <div class="advantages-item">
-                <div class="advantages-item-number">
-                  <span>1</span>
-                </div>
-
-                <div class="advantages-item-text">
-                  <span>Мастерски вовлекаем аудиторию процесс.</span> Мы увеличиваем процент вовлечённости за короткий промежуток времени.
-                </div>
+            <div class="advantages-item">
+              <div class="advantages-item-number">
+                <span>2</span>
               </div>
-              <div class="advantages-item">
-                <div class="advantages-item-number">
-                  <span>2</span>
-                </div>
 
-                <div class="advantages-item-text">
-                  <span>Разрабатываем бомбическую визуальную концепцию.</span> Наши специалисты знают как создать уникальный образ вашего проекта.
-                </div>
+              <div class="advantages-item-text">
+                <span>Разрабатываем бомбическую визуальную концепцию.</span> Наши специалисты знают как создать
+                уникальный образ вашего проекта.
               </div>
-              <div class="advantages-item">
-                <div class="advantages-item-number">
-                  <span>3</span>
-                </div>
-
-                <div class="advantages-item-text">
-                  <span>Создаём мощные воронки с помощью текстов.</span>  Наши копирайтеры создают не только вкусные текста, но и классные воронки.
-                </div>
+            </div>
+            <div class="advantages-item">
+              <div class="advantages-item-number">
+                <span>3</span>
               </div>
-              <div class="advantages-item">
-                <div class="advantages-item-number">
-                  <span>4</span>
-                </div>
 
-                <div class="advantages-item-text">
-                  <span>Помогаем продавать больше.</span>   Мы не только помогаем разработать стратегию по продажам, но также корректируем её под нужды заказчика.
-                </div>
+              <div class="advantages-item-text">
+                <span>Создаём мощные воронки с помощью текстов.</span> Наши копирайтеры создают не только вкусные
+                текста, но и классные воронки.
+              </div>
+            </div>
+            <div class="advantages-item">
+              <div class="advantages-item-number">
+                <span>4</span>
+              </div>
+
+              <div class="advantages-item-text">
+                <span>Помогаем продавать больше.</span> Мы не только помогаем разработать стратегию по продажам, но
+                также корректируем её под нужды заказчика.
               </div>
             </div>
           </div>
         </div>
-     </section>
+      </div>
+    </section>
 
     <section class="popular-articles">
       <div class="popular-articles-title">
         Популярные статьи из блога
       </div>
+
+      <div class="popular-articles-items">
+        @for (article of popularArticles; track article) {
+          <app-article-card [article]="article"></app-article-card>
+        }
+      </div>
+
+      <div class="go-blog" routerLink="">
+        Перейти в блог
+        <span class="go-blog-icon">
+            <svg width="16.000000" height="16.000000" viewBox="0 0 16 16" fill="none"
+                 xmlns="http://www.w3.org/2000/svg"><rect id="Аrrow" rx="0.000000" width="15.000000" height="15.000000"
+                                                          transform="translate(16.500000 16.500000) rotate(180.000000)"
+                                                          fill="#FFFFFF" fill-opacity="0"/><path id="Vector"
+                                                                                                 d="M5.44 1C5.59 1 5.75 1.05 5.87 1.17L11.18 6.44C12.05 7.29 12.05 8.7 11.18 9.55L5.87 14.82C5.63 15.05 5.24 15.05 5.01 14.82C4.77 14.59 4.77 14.2 5.01 13.96L10.32 8.7C10.71 8.31 10.71 7.68 10.32 7.29L5.01 2.03C4.77 1.79 4.77 1.41 5.01 1.17C5.13 1.06 5.28 1 5.44 1Z"
+                                                                                                 fill="#709FDC"
+                                                                                                 fill-opacity="1.000000"
+                                                                                                 fill-rule="nonzero"/><g
+              opacity="0.000000"/></svg>
+          </span>
+      </div>
     </section>
   </div>
 </div>
+
+<ng-template #orderDialog>
+  <div class="service-dialog">
+    @if (!successfulOrderRequest) {
+      <div class="dialog-title">Заявка на услугу</div>
+
+      <form class="dialog-form" [formGroup]="orderForm">
+        <select class="input dialog-form-select" #orderDialogSelect id="dialog-form-select">
+          <option value="Создание сайтов">Создание сайтов</option>
+          <option value="Продвижение">Продвижение</option>
+          <option value="Реклама">Реклама</option>
+          <option value="Копирайтинг">Копирайтинг</option>
+        </select>
+
+        <input type="text" class="input" placeholder="Ваше имя" formControlName="name"
+               [ngStyle]="{'border-color': orderForm.get('name')?.invalid && (orderForm.get('name')?.touched || orderForm.get('name')?.dirty) ? 'red' : ''}">
+        @if (orderForm.get('name')?.hasError('required') && (orderForm.get('name')?.touched || orderForm.get('name')?.dirty)) {
+          <div class="text-danger">
+            Введите Ваше имя
+          </div>
+        }
+
+        <input type="text" class="input" placeholder="Ваш номер телефона" prefix="+7" mask="(000) 000 00 00" formControlName="phone" id="qu"
+               [ngStyle]="{'border-color': orderForm.get('phone')?.invalid && (orderForm.get('phone')?.touched || orderForm.get('phone')?.dirty) ? 'red' : ''}">
+
+        @if (orderForm.get('phone')?.hasError('required') && (orderForm.get('phone')?.touched || orderForm.get('phone')?.dirty)) {
+          <div class="text-danger">
+            Введите номер телефона
+          </div>
+        } @else if (orderForm.get('phone')?.hasError('minlength')) {
+          <div class="text-danger">
+            Введите корректный номер телефона
+          </div>
+        }
+      </form>
+
+      <button class="button dialog-button" (click)="serviceRequest()">
+        Оставить заявку
+      </button>
+
+      @if (unsuccessfulOrderRequest) {
+        <div class="text-danger"> {{unsuccessfulOrderRequest}} </div>
+      }
+
+    } @else {
+      <div class="dialog-title">Спасибо за вашу заявку!</div>
+
+      <div class="service-dialog-description">
+        Мы свяжемся с вами при первой же возможности.
+      </div>
+
+      <button class="button successful-request-button">
+        Окей
+      </button>
+    }
+
+    <button class="dialog-close" [mat-dialog-close]="true">
+      <svg width="16.000000" height="16.000000" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip17_1878)">
+          <rect id="Х" rx="0.000000" width="13.187500" height="13.187500" transform="translate(1.406250 2.406250)"
+                fill="#FFFFFF" fill-opacity="0"/>
+          <line id="Line 4" x1="1.582031" y1="2.296387" x2="14.310059" y2="15.024414" stroke="#BEBEBE"
+                stroke-opacity="1.000000" stroke-width="1.000000"/>
+          <line id="Line 5" x1="14.277100" y1="2.276123" x2="1.549072" y2="15.004150" stroke="#BEBEBE"
+                stroke-opacity="1.000000" stroke-width="1.000000"/>
+        </g>
+      </svg>
+    </button>
+  </div>
+</ng-template>

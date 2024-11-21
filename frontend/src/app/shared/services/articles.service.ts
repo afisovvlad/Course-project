@@ -11,7 +11,7 @@ export class ArticlesService {
 
   constructor(private http: HttpClient) { }
 
-  getPopularArticles (): Observable<ArticleType> {
-    return this.http.get<ArticleType>(environment.api + 'articles/top')
+  getPopularArticles (): Observable<ArticleType[]> {
+    return this.http.get<ArticleType[]>(environment.api + 'articles/top')
   }
 }
