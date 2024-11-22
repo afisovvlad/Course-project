@@ -31,16 +31,16 @@
               <div class="main-title-slider">
                 Нужен грамотный <span>копирайтер</span>?
               </div>
-
+<!---->
               <div class="second-mini-title-slider">
                 Весь декабрь у нас действует акция на работу копирайтера.
               </div>
-
+<!---->
               <button class="button slide-button">
                 Подробнее
               </button>
             </div>
-
+<!---->
             <div class="image-block">
               <img src="/images/slider-image-2.png" alt="">
             </div>
@@ -50,27 +50,27 @@
               <div class="first-mini-title-slider">
                 Новость дня
               </div>
-
+<!---->
               <div class="main-title-slider">
                 <span>6 место</span>в ТОП-10 SMM-агенств Москвы!
               </div>
-
+<!---->
               <div class="second-mini-title-slider">
                 Мы благодарим каждого, кто голосовал за нас!
               </div>
-
+<!---->
               <button class="button slide-button">
                 Подробнее
               </button>
             </div>
-
+<!---->
             <div class="image-block">
               <img src="/images/slider-image-3.png" alt="">
             </div>
           </div>
         </div>
         <div class="swiper-pagination"></div>
-
+<!---->
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>
@@ -183,6 +183,116 @@
           </span>
       </div>
     </section>
+
+    <section class="reviews">
+      <div class="reviews-title">
+        Отзывы о нашей работе
+      </div>
+
+      <div class="reviews-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="review-user-info">
+              <div class="review-user-info-image">
+                <img src="/images/review_1.png" alt="">
+              </div>
+
+              <div class="review-user-info-name">
+                Станислав
+              </div>
+            </div>
+
+            <div class="review-text">
+              Спасибо огромное АйтиШторму за прекрасный блог с полезными статьями! Именно они и побудили меня углубиться
+              в тему SMM и начать свою карьеру.
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="review-user-info">
+              <div class="review-user-info-image">
+                <img src="/images/review_2.png" alt="">
+              </div>
+
+              <div class="review-user-info-name">
+                Алёна
+              </div>
+            </div>
+
+            <div class="review-text">
+              Обратилась в АйтиШторм за помощью копирайтера. Ни разу ещё не пожалела! Ребята действительно вкладывают
+              душу в то, что делают, и каждый текст, который я получаю, с нетерпением хочется выложить в сеть.
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="review-user-info">
+              <div class="review-user-info-image">
+                <img src="/images/review_3.png" alt="">
+              </div>
+
+              <div class="review-user-info-name">
+                Мария
+              </div>
+            </div>
+
+            <div class="review-text">
+              Команда АйтиШторма за такой короткий промежуток времени сделала невозможное: от простой фирмы по услуге
+              продвижения выросла в мощный блог о важности личного бренда. Класс!
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="review-user-info">
+              <div class="review-user-info-image">
+                <img src="/images/review_1.png" alt="">
+              </div>
+
+              <div class="review-user-info-name">
+                Станислав
+              </div>
+            </div>
+
+            <div class="review-text">
+              Спасибо огромное АйтиШторму за прекрасный блог с полезными статьями! Именно они и побудили меня углубиться
+              в тему SMM и начать свою карьеру.
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="review-user-info">
+              <div class="review-user-info-image">
+                <img src="/images/review_2.png" alt="">
+              </div>
+
+              <div class="review-user-info-name">
+                Алёна
+              </div>
+            </div>
+
+            <div class="review-text">
+              Обратилась в АйтиШторм за помощью копирайтера. Ни разу ещё не пожалела! Ребята действительно вкладывают
+              душу в то, что делают, и каждый текст, который я получаю, с нетерпением хочется выложить в сеть.
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="review-user-info">
+              <div class="review-user-info-image">
+                <img src="/images/review_3.png" alt="">
+              </div>
+
+              <div class="review-user-info-name">
+                Мария
+              </div>
+            </div>
+
+            <div class="review-text">
+              Команда АйтиШторма за такой короткий промежуток времени сделала невозможное: от простой фирмы по услуге
+              продвижения выросла в мощный блог о важности личного бренда. Класс!
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -207,7 +317,8 @@
           </div>
         }
 
-        <input type="text" class="input" placeholder="Ваш номер телефона" prefix="+7" mask="(000) 000 00 00" formControlName="phone" id="qu"
+        <input type="text" class="input" placeholder="Ваш номер телефона" prefix="+7" mask="(000) 000 00 00"
+               formControlName="phone" id="qu"
                [ngStyle]="{'border-color': orderForm.get('phone')?.invalid && (orderForm.get('phone')?.touched || orderForm.get('phone')?.dirty) ? 'red' : ''}">
 
         @if (orderForm.get('phone')?.hasError('required') && (orderForm.get('phone')?.touched || orderForm.get('phone')?.dirty)) {
@@ -226,7 +337,7 @@
       </button>
 
       @if (unsuccessfulOrderRequest) {
-        <div class="text-danger"> {{unsuccessfulOrderRequest}} </div>
+        <div class="text-danger"> {{ unsuccessfulOrderRequest }}</div>
       }
 
     } @else {
@@ -236,7 +347,7 @@
         Мы свяжемся с вами при первой же возможности.
       </div>
 
-      <button class="button successful-request-button">
+      <button class="button successful-request-button" [mat-dialog-close]="true">
         Окей
       </button>
     }

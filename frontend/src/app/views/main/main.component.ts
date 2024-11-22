@@ -1,7 +1,4 @@
 import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import Swiper from 'swiper/bundle';
-import {Navigation, Pagination} from 'swiper/modules';
-import 'swiper/swiper-bundle.css'
 import {ArticleCardComponent} from '../../shared/components/article-card/article-card.component';
 import {ServiceType} from '../../../types/service.type';
 import {ArticlesService} from '../../shared/services/articles.service';
@@ -14,7 +11,6 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {NgStyle} from '@angular/common';
 import {RequestService} from '../../shared/services/request.service';
-import {Option} from '@angular/cli/src/command-builder/utilities/json-schema';
 import {DefaultResponseType} from '../../../types/default-response.type';
 
 @Component({
@@ -42,7 +38,6 @@ export class MainComponent implements OnInit {
   private dialog = inject(MatDialog);
   @ViewChild('orderDialog') orderDialog!: TemplateRef<ElementRef>;
   @ViewChild('orderDialogSelect') orderDialogSelect!: HTMLSelectElement;
-  swiper!: Swiper;
   popularArticles: ArticleType[] = [];
   servicesArr: ServiceType[] = [
     {
@@ -82,21 +77,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.swiper = new Swiper('.swiper', {
-      loop: true,
 
-      modules: [Pagination, Navigation],
-
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      },
-
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
 
     this.articleService.getPopularArticles()
       .subscribe({

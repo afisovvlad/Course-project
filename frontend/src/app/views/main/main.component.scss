@@ -230,6 +230,56 @@
 
       }
     }
+
+    .reviews {
+      .reviews-title {
+        color: $main-blue-color;
+        font-family: Lora, sans-serif;
+        font-size: 38px;
+        font-weight: 400;
+        margin-bottom: 20px;
+      }
+
+      .reviews-swiper {
+
+        .swiper-wrapper {
+          gap: 25px;
+
+          .swiper-slide {
+            padding: 30px 30px 20px 30px;
+            width: 396px !important;
+            height: 267px;
+            border: 2px solid $main-blue-color;
+            border-radius: 5px;
+
+            .review-user-info {
+              display: flex;
+              align-items: center;
+              margin-bottom: 15px;
+
+              .review-user-info-image {
+                margin-right: 26px;
+              }
+
+              .review-user-info-name {
+                color: $main-blue-color;
+                font-family: Montserrat, sans-serif;
+                font-size: 18px;
+                font-weight: 600;
+              }
+            }
+
+            .review-text {
+              color: $main-dark-color;
+              font-family: Montserrat, sans-serif;
+              font-size: 16px;
+              font-weight: 400;
+              line-height: 140%;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
