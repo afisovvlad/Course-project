@@ -20,4 +20,12 @@ export class RequestService {
       type: 'order'
     });
   }
+
+  consultationRequest(name: string, phone: string): Observable<DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(environment.api + 'requests', {
+      name: name,
+      phone: phone,
+      type: 'consultation'
+    });
+  }
 }

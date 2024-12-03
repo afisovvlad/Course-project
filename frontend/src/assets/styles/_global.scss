@@ -62,24 +62,6 @@ a {
   }
 }
 
-.swiper-pagination {
-  --swiper-pagination-color: #fff;
-  --swiper-pagination-bullet-horizontal-gap: 14px;
-  --swiper-pagination-progressbar-bg-color: #fff;
-  --swiper-pagination-bullet-size: 11px;
-  --swiper-pagination-bullet-inactive-color: transparent;
-  --swiper-pagination-bullet-inactive-opacity: 1;
-
-  .swiper-pagination-bullet {
-    border: 2px solid rgb(255, 255, 255);
-  }
-}
-
-.swiper-button-prev, .swiper-button-next {
-  --swiper-navigation-size: 25px;
-  --swiper-navigation-color: #fff;
-}
-
 .mat-mdc-dialog-surface {
   overflow-y: unset !important;
 }
@@ -94,4 +76,9 @@ a {
   &.text-danger-last {
     margin-bottom: 10px;
   }
+}
+
+.swiper-pagination-bullet {
+  border: 2px solid rgb(255, 255, 255) !important;
+  opacity: 1 !important;
 }

@@ -5,85 +5,95 @@
     .main-slider {
       padding-bottom: 120px;
 
-      .swiper {
-        width: 1240px;
-        height: 500px;
+      .main-swiper {
+        --swiper-navigation-size: 25px;
+        --swiper-navigation-color: rgb(255, 255, 255);
+        --swiper-pagination-bullet-horizontal-gap: 10px;
+        --swiper-pagination-color: rgb(255, 255, 255);
+        --swiper-pagination-bullet-size: 10px;
+        --swiper-pagination-bullet-inactive-color: transparent;
 
-        .swiper-slide {
+        .swiper-wrapper {
+          width: 1240px;
           height: 500px;
-          display: flex;
-          align-items: center;
           position: relative;
-          overflow: hidden;
 
-          &::after {
-            display: block;
-            content: "";
-            width: 1405px;
-            height: 1405px;
-            background: rgb(185, 213, 253);
-            border-radius: 50%;
-            left: -702px;
-            top: -702px;
-            position: absolute;
-            z-index: 1;
-          }
-
-          .text-block {
-            padding-top: 100px;
-            padding-bottom: 98px;
-            padding-left: 65px;
-            height: 100%;
-            background-color: rgb(185, 213, 253);
-            min-width: 584px;
+          .swiper-slide {
+            height: 500px;
+            display: flex;
+            align-items: center;
             position: relative;
-            z-index: 2;
-            border-bottom-right-radius: 50%;
+            overflow: hidden;
 
-            .first-mini-title-slider {
-              color: $main-blue-color;
-              font-family: Montserrat, sans-serif;
-              font-size: 12px;
-              font-weight: 600;
+            &::after {
+              display: block;
+              content: "";
+              width: 1405px;
+              height: 1405px;
+              background: rgb(185, 213, 253);
+              border-radius: 50%;
+              left: -702px;
+              top: -702px;
+              position: absolute;
+              z-index: 1;
             }
 
-            .main-title-slider {
-              font-family: Lora, sans-serif;
-              font-size: 50px;
-              font-weight: 400;
-              line-height: 130%;
-              margin-bottom: 20px;
-              color: rgb(255, 255, 255);
-              min-width: 610px;
+            .text-block {
+              padding-top: 100px;
+              padding-bottom: 98px;
+              padding-left: 65px;
+              height: 100%;
+              background-color: rgb(185, 213, 253);
+              min-width: 584px;
+              position: relative;
+              z-index: 2;
+              border-bottom-right-radius: 50%;
 
-              span {
+              .first-mini-title-slider {
                 color: $main-blue-color;
+                font-family: Montserrat, sans-serif;
+                font-size: 12px;
+                font-weight: 600;
+              }
+
+              .main-title-slider {
+                font-family: Lora, sans-serif;
+                font-size: 50px;
+                font-weight: 400;
+                line-height: 130%;
+                margin-bottom: 20px;
+                color: rgb(255, 255, 255);
+                min-width: 610px;
+
+                span {
+                  color: $main-blue-color;
+                }
+              }
+
+              .second-mini-title-slider {
+                margin-bottom: 30px;
+                color: rgb(255, 255, 255);
+                font-family: Montserrat, sans-serif;
+                font-size: 24px;
+                font-weight: 400;
+                line-height: 130%;
+              }
+
+              .slide-button {
+                padding: 15px 0;
+                width: 163px;
+                margin-top: 20px;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 130%;
               }
             }
 
-            .second-mini-title-slider {
-              margin-bottom: 30px;
-              color: rgb(255, 255, 255);
-              font-family: Montserrat, sans-serif;
-              font-size: 24px;
-              font-weight: 400;
-              line-height: 130%;
+            .image-block {
+              position: relative;
+              right: 94px;
+              bottom: -2px;
             }
-
-            .slide-button {
-              padding: 15px 0;
-              width: 163px;
-              margin-top: 20px;
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 130%;
-            }
-          }
-
-          .image-block {
-            position: relative;
-            right: 94px;
-            bottom: -2px;
           }
         }
       }
@@ -221,6 +231,7 @@
         font-family: Montserrat, sans-serif;
         font-size: 20px;
         font-weight: 500;
+        cursor: pointer;
 
         span {
           position: relative;
@@ -232,6 +243,8 @@
     }
 
     .reviews {
+      padding-bottom: 120px;
+      position: relative;
       .reviews-title {
         color: $main-blue-color;
         font-family: Lora, sans-serif;
@@ -241,40 +254,98 @@
       }
 
       .reviews-swiper {
+        .swiper-slide {
+          padding: 30px 30px 20px 30px;
+          height: 267px;
+          border: 2px solid $main-blue-color;
+          border-radius: 5px;
 
-        .swiper-wrapper {
-          gap: 25px;
+          .review-user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
 
-          .swiper-slide {
-            padding: 30px 30px 20px 30px;
-            width: 396px !important;
-            height: 267px;
-            border: 2px solid $main-blue-color;
-            border-radius: 5px;
-
-            .review-user-info {
-              display: flex;
-              align-items: center;
-              margin-bottom: 15px;
-
-              .review-user-info-image {
-                margin-right: 26px;
-              }
-
-              .review-user-info-name {
-                color: $main-blue-color;
-                font-family: Montserrat, sans-serif;
-                font-size: 18px;
-                font-weight: 600;
-              }
+            .review-user-info-image {
+              margin-right: 26px;
             }
 
-            .review-text {
-              color: $main-dark-color;
+            .review-user-info-name {
+              color: $main-blue-color;
               font-family: Montserrat, sans-serif;
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 140%;
+              font-size: 18px;
+              font-weight: 600;
+            }
+          }
+
+          .review-text {
+            color: $main-dark-color;
+            font-family: Montserrat, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 140%;
+          }
+        }
+      }
+
+      .swiper-button-prev, .swiper-button-next {
+        --swiper-navigation-size: 20px;
+        color: $main-blue-color;
+        top: 200px;
+      }
+
+      .swiper-button-prev {
+        position: absolute;
+        left: -30px;
+      }
+
+      .swiper-button-next {
+        position: absolute;
+        right: -30px;
+      }
+    }
+
+    .contact {
+      padding-bottom: 120px;
+      display: flex;
+      gap: 26px;
+
+      .contact-title {
+        color: $main-blue-color;
+        font-family: Lora, sans-serif;
+        font-size: 38px;
+        font-weight: 400;
+        margin-bottom: 20px;
+      }
+
+      .contact-items {
+        row-gap: 20px;
+        display: flex;
+        flex-direction: column;
+
+        .contact-item {
+          .contact-item-title {
+            color: $main-blue-color;
+            font-family: Montserrat, sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+          }
+
+          .contact-item-description {
+            max-width: 501px;
+            color: $main-dark-color;
+            font-family: Montserrat, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 130%;
+          }
+
+          .contact-item-social-media {
+            display: flex;
+            column-gap: 20px;
+
+            .contact-item-social-media-item {
+              cursor: pointer;
             }
           }
         }
@@ -298,6 +369,8 @@
     font-size: 38px;
     font-weight: 400;
     margin-bottom: 20px;
+    line-height: 130%;
+    max-width: 406px;
   }
 
   .service-dialog-description {

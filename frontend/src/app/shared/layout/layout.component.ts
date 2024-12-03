@@ -15,5 +15,9 @@ import {FooterComponent} from './footer/footer.component';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
+  callMeEvent: null = null;
 
+  callMe() {
+
+  }
 }

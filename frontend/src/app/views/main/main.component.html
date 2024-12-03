@@ -1,7 +1,7 @@
 <div class="main">
   <div class="container">
     <section class="main-slider">
-      <div class="swiper">
+      <div class="swiper main-swiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="text-block">
@@ -13,7 +13,7 @@
                 Продвижение в Instagram для вашего бизнеса <span>-15%</span>!
               </div>
 
-              <button class="button slide-button">
+              <button class="button slide-button" (click)="showModalService('Продвижение')">
                 Подробнее
               </button>
             </div>
@@ -31,16 +31,16 @@
               <div class="main-title-slider">
                 Нужен грамотный <span>копирайтер</span>?
               </div>
-<!---->
+
               <div class="second-mini-title-slider">
                 Весь декабрь у нас действует акция на работу копирайтера.
               </div>
-<!---->
-              <button class="button slide-button">
+
+              <button class="button slide-button" (click)="showModalService('Копирайтинг')">
                 Подробнее
               </button>
             </div>
-<!---->
+
             <div class="image-block">
               <img src="/images/slider-image-2.png" alt="">
             </div>
@@ -50,27 +50,28 @@
               <div class="first-mini-title-slider">
                 Новость дня
               </div>
-<!---->
+
               <div class="main-title-slider">
                 <span>6 место</span>в ТОП-10 SMM-агенств Москвы!
               </div>
-<!---->
+
               <div class="second-mini-title-slider">
                 Мы благодарим каждого, кто голосовал за нас!
               </div>
-<!---->
-              <button class="button slide-button">
+
+              <button class="button slide-button" (click)="showModalService('Создание сайтов')">
                 Подробнее
               </button>
             </div>
-<!---->
+
             <div class="image-block">
               <img src="/images/slider-image-3.png" alt="">
             </div>
           </div>
         </div>
+
         <div class="swiper-pagination"></div>
-<!---->
+
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>
@@ -180,7 +181,7 @@
                                                                                                  fill-opacity="1.000000"
                                                                                                  fill-rule="nonzero"/><g
               opacity="0.000000"/></svg>
-          </span>
+        </span>
       </div>
     </section>
 
@@ -189,7 +190,7 @@
         Отзывы о нашей работе
       </div>
 
-      <div class="reviews-swiper">
+      <div class="swiper reviews-swiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="review-user-info">
@@ -288,9 +289,71 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </section>
+
+    <section class="contact">
+      <div class="contact-map">
+        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Af8eea99517e2634bf1e73b9f875be37ab4768305b74c677e9bc6b7b1492f6f76&amp;source=constructor" width="607" height="438" frameborder="0"></iframe>
+      </div>
+
+      <div class="contact-info">
+        <div class="contact-title">
+          Контакты
+        </div>
+
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-title">
+              Адрес
+            </div>
+
+            <div class="contact-item-description">
+              Главный офис компании АйтиШторм находится по адресу Пресненская наб., 12, Москва, Россия, 123317.
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-title">
+              Телефон
+            </div>
+
+            <div class="contact-item-description">
+              +7 (499) 343-13-34
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-title">
+              Электронный адрес
+            </div>
+
+            <div class="contact-item-description">
+              info&#64;itstorm.com
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-title">
+              Мы в социальных сетях
+            </div>
+
+            <div class="contact-item-social-media">
+              <a class="contact-item-social-media-item">
+                <svg width="30.000000" height="30.000000" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect id="VK" rx="0.000000" width="29.138889" height="29.138889" transform="translate(0.430556 0.430556)" fill="#FFFFFF" fill-opacity="0"/><g clip-path="url(#clip14_131)"><path id="Vector" d="M5.73 0.26C2.73 0.26 0.26 2.73 0.26 5.73L0.26 24.26C0.26 27.26 2.73 29.73 5.73 29.73L24.26 29.73C27.26 29.73 29.73 27.26 29.73 24.26L29.73 5.73C29.73 2.73 27.26 0.26 24.26 0.26L5.73 0.26ZM5.73 2.94L24.26 2.94C25.81 2.94 27.05 4.18 27.05 5.73L27.05 24.26C27.05 25.81 25.81 27.05 24.26 27.05L5.73 27.05C4.18 27.05 2.94 25.81 2.94 24.26L2.94 5.73C2.94 4.18 4.18 2.94 5.73 2.94ZM14.62 9.95C13.63 9.94 12.8 9.95 12.33 10.18C12.01 10.33 11.77 10.67 11.92 10.69C12.1 10.72 12.52 10.8 12.73 11.1C13.02 11.48 13.01 12.35 13.01 12.35C13.01 12.35 13.16 14.72 12.62 15.02C12.25 15.22 11.75 14.81 10.65 12.92C10.09 11.95 9.66 10.88 9.66 10.88C9.66 10.88 9.59 10.68 9.44 10.57C9.26 10.44 9.02 10.4 9.02 10.4L6.39 10.42C6.39 10.42 6 10.43 5.86 10.6C5.73 10.76 5.85 11.07 5.85 11.07C5.85 11.07 7.9 15.86 10.22 18.28C12.35 20.5 14.77 20.35 14.77 20.35L15.87 20.35C15.87 20.35 16.2 20.32 16.37 20.14C16.52 19.97 16.52 19.66 16.52 19.66C16.52 19.66 16.5 18.19 17.18 17.97C17.85 17.76 18.71 19.39 19.62 20.02C20.32 20.49 20.85 20.39 20.85 20.39L23.3 20.35C23.3 20.35 24.57 20.27 23.97 19.26C23.92 19.18 23.62 18.52 22.15 17.16C20.61 15.74 20.82 15.97 22.67 13.5C23.79 12 24.24 11.09 24.1 10.69C23.97 10.32 23.14 10.42 23.14 10.42L20.38 10.43C20.38 10.43 20.18 10.41 20.03 10.5C19.88 10.58 19.79 10.79 19.79 10.79C19.79 10.79 19.35 11.96 18.77 12.94C17.54 15.03 17.05 15.14 16.85 15.01C16.38 14.71 16.5 13.8 16.5 13.15C16.5 11.13 16.8 10.29 15.9 10.07C15.6 10 15.38 9.95 14.62 9.95Z" fill="#B9D5FD" fill-opacity="1.000000" fill-rule="nonzero"/></g></svg>
+              </a>
+              <a class="contact-item-social-media-item">
+                <svg width="30.000732" height="30.000488" viewBox="0 0 30.0007 30.0005" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect id="Facebook" rx="0.000000" width="29.139681" height="29.139376" transform="translate(0.430556 0.430556)" fill="#FFFFFF" fill-opacity="0"/><g clip-path="url(#clip14_135)"><path id="Vector" d="M15 0C6.73 0 0 6.73 0 15C0 23.27 6.73 30 15 30C23.26 30 30 23.27 30 15C30 6.73 23.26 0 15 0ZM15 2.5C21.91 2.5 27.5 8.08 27.5 15C27.5 21.28 22.88 26.45 16.86 27.34L16.86 18.64L20.41 18.64L20.97 15.02L16.86 15.02L16.86 13.05C16.86 11.55 17.35 10.22 18.75 10.22L21.01 10.22L21.01 7.06C20.61 7.01 19.77 6.89 18.19 6.89C14.88 6.89 12.94 8.64 12.94 12.62L12.94 15.02L9.54 15.02L9.54 18.64L12.94 18.64L12.94 27.31C7.01 26.33 2.5 21.21 2.5 15C2.5 8.08 8.08 2.5 15 2.5Z" fill="#B9D5FD" fill-opacity="1.000000" fill-rule="nonzero"/></g></svg>
+              </a>
+              <a class="contact-item-social-media-item">
+                <svg width="30.000000" height="30.000000" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect id="Instagram" rx="0.000000" width="29.138889" height="29.138889" transform="translate(0.430556 0.430556)" fill="#FFFFFF" fill-opacity="0"/><g clip-path="url(#clip14_133)"><path id="Vector" d="M8.93 0.26C4.17 0.26 0.26 4.17 0.26 8.93L0.26 21.06C0.26 25.82 4.17 29.73 8.93 29.73L21.06 29.73C25.82 29.73 29.73 25.82 29.73 21.06L29.73 8.93C29.73 4.17 25.82 0.26 21.06 0.26L8.93 0.26ZM8.93 2.94L21.06 2.94C24.38 2.94 27.05 5.61 27.05 8.93L27.05 21.06C27.05 24.37 24.38 27.05 21.06 27.05L8.93 27.05C5.62 27.05 2.94 24.37 2.94 21.06L2.94 8.93C2.94 5.61 5.62 2.94 8.93 2.94ZM22.91 5.87C22.23 5.87 21.69 6.41 21.69 7.08C21.69 7.76 22.23 8.3 22.91 8.3C23.58 8.3 24.12 7.76 24.12 7.08C24.12 6.41 23.58 5.87 22.91 5.87ZM15 6.96C10.57 6.96 6.96 10.57 6.96 14.99C6.96 19.42 10.57 23.03 15 23.03C19.42 23.03 23.03 19.42 23.03 14.99C23.03 10.57 19.42 6.96 15 6.96ZM15 9.64C17.97 9.64 20.35 12.02 20.35 14.99C20.35 17.97 17.97 20.35 15 20.35C12.02 20.35 9.64 17.97 9.64 14.99C9.64 12.02 12.02 9.64 15 9.64Z" fill="#B9D5FD" fill-opacity="1.000000" fill-rule="nonzero"/></g></svg>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -318,7 +381,7 @@
         }
 
         <input type="text" class="input" placeholder="Ваш номер телефона" prefix="+7" mask="(000) 000 00 00"
-               formControlName="phone" id="qu"
+               formControlName="phone"
                [ngStyle]="{'border-color': orderForm.get('phone')?.invalid && (orderForm.get('phone')?.touched || orderForm.get('phone')?.dirty) ? 'red' : ''}">
 
         @if (orderForm.get('phone')?.hasError('required') && (orderForm.get('phone')?.touched || orderForm.get('phone')?.dirty)) {
@@ -332,7 +395,7 @@
         }
       </form>
 
-      <button class="button dialog-button" (click)="serviceRequest()">
+      <button class="button dialog-button" (click)="orderRequest()">
         Оставить заявку
       </button>
 
@@ -347,12 +410,12 @@
         Мы свяжемся с вами при первой же возможности.
       </div>
 
-      <button class="button successful-request-button" [mat-dialog-close]="true">
+      <button class="button successful-request-button" (click)="closeOrderModal()">
         Окей
       </button>
     }
 
-    <button class="dialog-close" [mat-dialog-close]="true">
+    <button class="dialog-close" (click)="closeOrderModal()">
       <svg width="16.000000" height="16.000000" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip17_1878)">
           <rect id="Х" rx="0.000000" width="13.187500" height="13.187500" transform="translate(1.406250 2.406250)"
@@ -366,3 +429,73 @@
     </button>
   </div>
 </ng-template>
+
+<ng-template #consultationDialog>
+  <div class="service-dialog">
+    @if (!successfulConsultationRequest) {
+      <div class="dialog-title">
+        Закажите бесплатную консультацию!
+      </div>
+
+      <form class="dialog-form" [formGroup]="consultationForm">
+        <input type="text" class="input" placeholder="Ваше имя" formControlName="name"
+               [ngStyle]="{'border-color': consultationForm.get('name')?.invalid && (consultationForm.get('name')?.touched || consultationForm.get('name')?.dirty) ? 'red' : ''}">
+        @if (consultationForm.get('name')?.hasError('required') && (consultationForm.get('name')?.touched || consultationForm.get('name')?.dirty)) {
+          <div class="text-danger">
+            Введите Ваше имя
+          </div>
+        }
+
+        <input type="text" class="input" placeholder="Ваш номер телефона" prefix="+7" mask="(000) 000 00 00"
+               formControlName="phone"
+               [ngStyle]="{'border-color': consultationForm.get('phone')?.invalid && (consultationForm.get('phone')?.touched || consultationForm.get('phone')?.dirty) ? 'red' : ''}">
+
+        @if (consultationForm.get('phone')?.hasError('required') && (consultationForm.get('phone')?.touched || consultationForm.get('phone')?.dirty)) {
+          <div class="text-danger">
+            Введите номер телефона
+          </div>
+        } @else if (consultationForm.get('phone')?.hasError('minlength')) {
+          <div class="text-danger">
+            Введите корректный номер телефона
+          </div>
+        }
+      </form>
+
+      <button class="button dialog-button" (click)="consultationRequest()">
+        Заказать консультацию
+      </button>
+
+      @if (unsuccessfulConsultationRequest) {
+        <div class="text-danger"> {{ unsuccessfulOrderRequest }}</div>
+      }
+
+    } @else {
+      <div class="dialog-title">Спасибо за вашу заявку!</div>
+
+      <div class="service-dialog-description">
+        Мы свяжемся с вами при первой же возможности.
+      </div>
+
+      <button class="button successful-request-button" (click)="closeConsultationModal()">
+        Окей
+      </button>
+    }
+
+    <button class="dialog-close" (click)="closeConsultationModal()">
+      <svg width="16.000000" height="16.000000" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip17_1878)">
+          <rect id="Х" rx="0.000000" width="13.187500" height="13.187500" transform="translate(1.406250 2.406250)"
+                fill="#FFFFFF" fill-opacity="0"/>
+          <line id="Line 4" x1="1.582031" y1="2.296387" x2="14.310059" y2="15.024414" stroke="#BEBEBE"
+                stroke-opacity="1.000000" stroke-width="1.000000"/>
+          <line id="Line 5" x1="14.277100" y1="2.276123" x2="1.549072" y2="15.004150" stroke="#BEBEBE"
+                stroke-opacity="1.000000" stroke-width="1.000000"/>
+        </g>
+      </svg>
+    </button>
+  </div>
+</ng-template>
+
+
+
+

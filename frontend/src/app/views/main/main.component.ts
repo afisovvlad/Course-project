@@ -6,12 +6,17 @@ import {ArticleType} from '../../../types/article.type';
 import {HttpErrorResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {RouterLink} from '@angular/router';
-import {MatDialog, MatDialogClose, MatDialogContent} from '@angular/material/dialog';
+import {MatDialog, MatDialogClose, MatDialogContent, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {NgStyle} from '@angular/common';
 import {RequestService} from '../../shared/services/request.service';
 import {DefaultResponseType} from '../../../types/default-response.type';
+
+import Swiper from 'swiper';
+import 'swiper/css/bundle';
+import {Navigation, Pagination} from 'swiper/modules';
+import {ModalService} from '../../shared/services/modal.service';
 
 @Component({
   selector: 'app-main',
@@ -37,8 +42,13 @@ export class MainComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
   @ViewChild('orderDialog') orderDialog!: TemplateRef<ElementRef>;
+  @ViewChild('consultationDialog') consultationDialog!: TemplateRef<ElementRef>;
   @ViewChild('orderDialogSelect') orderDialogSelect!: HTMLSelectElement;
   popularArticles: ArticleType[] = [];
+  mainSwiper!: Swiper;
+  reviewsSwiper!: Swiper;
+  orderDialogRef: MatDialogRef<any> | null = null;
+  consultationDialogRef: MatDialogRef<any> | null = null;
   servicesArr: ServiceType[] = [
     {
       image: '/images/services-image-1.png',
@@ -66,18 +76,59 @@ export class MainComponent implements OnInit {
     },
   ];
   unsuccessfulOrderRequest: string = '';
+  unsuccessfulConsultationRequest: string = '';
   successfulOrderRequest: boolean = false;
+  successfulConsultationRequest: boolean = false;
 
   orderForm = this.fb.group({
     name: ['', Validators.required],
     phone: ['', [Validators.required, Validators.minLength(10)]]
   });
 
-  constructor(private articleService: ArticlesService, private requestService: RequestService) {
+  consultationForm = this.fb.group({
+    name: ['', Validators.required],
+    phone: ['', [Validators.required, Validators.minLength(10)]]
+  });
+
+  constructor(private articleService: ArticlesService,
+              private requestService: RequestService,
+              private modalService: ModalService) {
   }
 
   ngOnInit() {
+    this.mainSwiper = new Swiper('.main-swiper', {
+      // вопрос: здесь если поставить true, то слайдеры почему-то будут конфликтовать, и неправильно работает бесконечный скролл, если убрать свойство rewind
+      loop: true,
+      rewind: true,
+      slidesPerView: 1,
 
+      modules: [Pagination, Navigation],
+
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+    this.reviewsSwiper = new Swiper('.reviews-swiper', {
+      loop: false,
+      rewind: true,
+      modules: [Navigation],
+
+      slidesPerView: 3,
+
+      spaceBetween: 25,
+
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
 
     this.articleService.getPopularArticles()
       .subscribe({
@@ -93,10 +144,19 @@ export class MainComponent implements OnInit {
           }
         }
       });
+
+    this.modalService.modalHandler$.subscribe(() => {
+      this.consultationDialogRef = this.dialog.open(this.consultationDialog, {
+        maxWidth: 'unset',
+        minWidth: 'unset',
+        maxHeight: 'unset',
+        minHeight: 'unset'
+      });
+    });
   }
 
   showModalService(service: string) {
-    this.dialog.open(this.orderDialog, {maxWidth: 'unset', minWidth: 'unset', maxHeight: 'unset', minHeight: 'unset'});
+    this.orderDialogRef = this.dialog.open(this.orderDialog, {maxWidth: 'unset', minWidth: 'unset', maxHeight: 'unset', minHeight: 'unset'});
     setTimeout(() => {
       const orderSelectElement = document.getElementById('dialog-form-select') as HTMLSelectElement;
       const optionsSelectElement = Array.from(orderSelectElement.options);
@@ -104,7 +164,7 @@ export class MainComponent implements OnInit {
     }, 0)
   }
 
-  serviceRequest() {
+  orderRequest() {
     if (this.orderForm.valid) {
       const orderSelectElement = document.getElementById('dialog-form-select') as HTMLSelectElement;
 
@@ -126,6 +186,45 @@ export class MainComponent implements OnInit {
             }
           });
       }
+    } else {
+      this.orderForm.markAllAsTouched();
     }
+  }
+
+  consultationRequest() {
+    if (this.consultationForm.valid) {
+      if (this.consultationForm.value.name && this.consultationForm.value.phone) {
+        this.requestService.consultationRequest(this.consultationForm.value.name, this.consultationForm.value.phone)
+          .subscribe({
+            next: ((data: DefaultResponseType) => {
+              if (data.error) {
+                this.unsuccessfulConsultationRequest = 'Произошла ошибка при отправке формы, попробуйте еще раз.'
+              } else {
+                this.successfulConsultationRequest = true;
+              }
+            }),
+
+            error: (errorResponse: HttpErrorResponse) => {
+              if (errorResponse.error) {
+                this.unsuccessfulConsultationRequest = 'Произошла ошибка при отправке формы, попробуйте еще раз.'
+              }
+            }
+          });
+      }
+    } else {
+      this.consultationForm.markAllAsTouched();
+    }
+  }
+
+  closeOrderModal(): void {
+    this.orderDialogRef?.close();
+    this.successfulOrderRequest = false;
+    this.unsuccessfulOrderRequest = '';
+  }
+
+  closeConsultationModal(): void {
+    this.consultationDialogRef?.close();
+    this.successfulConsultationRequest = false;
+    this.unsuccessfulConsultationRequest = '';
   }
 }
