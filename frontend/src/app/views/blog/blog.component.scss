@@ -1,0 +1,110 @@
+@import "../../../assets/styles/variables";
+
+.blog {
+  padding-top: 80px;
+  padding-bottom: 120px;
+
+  .container {
+    .blog-title {
+      color: $main-blue-color;
+      font-family: Lora, sans-serif;
+      font-size: 38px;
+      font-weight: 400;
+      margin-bottom: 40px;
+    }
+
+    .blog-category-filter {
+      margin-bottom: 40px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+
+      .blog-category-filter-items {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 20px;
+        color: $main-blue-color;
+
+        .blog-category-filter-item {
+          padding: 10px 20px;
+          border: 2px solid $main-blue-color;
+          border-radius: 5px;
+          display: flex;
+          column-gap: 10px;
+
+          span {
+            position: relative;
+            top: 2px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .blog-category-filter-sorting {
+        position: relative;
+        width: 148px;
+
+        &.open {
+          width: 257px;
+
+          .blog-category-filter-sorting-head {
+            padding: 12px 23px;
+            background-color: rgb(185, 213, 253);
+          }
+
+          .blog-category-filter-sorting-body {
+            display: flex;
+          }
+        }
+
+        .blog-category-filter-sorting-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+          border-radius: 5px 5px 0 0;
+
+          span {
+            position: relative;
+            top: 2px;
+          }
+        }
+
+        .blog-category-filter-sorting-body {
+          display: none;
+          position: absolute;
+          z-index: 3;
+          box-sizing: border-box;
+          padding: 17px 23px;
+          width: 100%;
+          background: rgb(255, 255, 255);
+          border-radius: 0 0 5px 5px;
+          flex-direction: column;
+          gap: 24px;
+          border: 2px solid rgb(185, 213, 253);
+
+          .blog-category-filter-sorting-body-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: rgb(190, 190, 190);
+            cursor: pointer;
+
+            &.active {
+              color: $main-dark-color;
+            }
+          }
+        }
+      }
+    }
+
+    .article-card-items {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 40px;
+      column-gap: 25px;
+      align-items: baseline;
+    }
+  }
+}

@@ -65,6 +65,10 @@
           color: $main-dark-color;
           display: flex;
           column-gap: 18px;
+
+          .footer-line-middle-group-text-icon {
+            cursor: pointer;
+          }
         }
 
         .footer-line-middle-group-button {

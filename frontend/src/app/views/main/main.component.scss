@@ -221,6 +221,7 @@
       .popular-articles-items {
         display: flex;
         flex-wrap: wrap;
+        align-items: baseline;
         gap: 25px;
         margin-bottom: 40px;
       }

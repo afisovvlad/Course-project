@@ -2,6 +2,12 @@
 
 .card-item {
   width: 291px;
+  height: 498px;
+  position: relative;
+
+  &.article-card-item {
+    min-height: 571px;
+  }
 
   .card-item-image {
     height: 291px;
@@ -21,7 +27,6 @@
     margin-bottom: 10px;
 
     &.article-card-item-title {
-      height: 78px;
       margin-bottom: 20px;
     }
   }
@@ -36,8 +41,9 @@
     height: 90px;
 
     &.article-card-item-description {
-      height: 130px;
-      margin-bottom: 20px;
+      height: 145px;
+      overflow-y: auto;
+      margin-bottom: 15px;
     }
   }
 
@@ -45,6 +51,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &.article-card-item-actions {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
 
     .card-item-actions-price {
       color: $main-blue-color;

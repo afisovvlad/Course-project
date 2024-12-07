@@ -1,4 +1,6 @@
-<div class="card-item">
+<div class="card-item"
+[class.article-card-item]="isArticleCard"
+>
   @if (!isArticleCard) {
     <div class="card-item-image">
       <img src="{{serviceCard?.image}}" alt="">
@@ -19,7 +21,9 @@
       <div class="card-item-description article-card-item-description">{{ article?.description }}</div>
     }
 
-  <div class="card-item-actions">
+  <div class="card-item-actions"
+       [class.article-card-item-actions]="isArticleCard"
+  >
     @if (!isArticleCard) {
       <div class="card-item-actions-price">
         {{ serviceCard?.price }}

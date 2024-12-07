@@ -1,7 +1,7 @@
 export type ArticleType = {
-  text:  string,
-  comments: [],
-  commentsCount: number,
+  text?:  string,
+  comments?: [],
+  commentsCount?: number,
   id: string,
   title: string,
   description: string,
