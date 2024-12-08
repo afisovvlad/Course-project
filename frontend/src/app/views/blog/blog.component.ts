@@ -6,7 +6,7 @@ import {CategoryService} from '../../shared/services/category.service';
 import {CategoryType} from '../../../types/category.type';
 import {ActiveParamsType} from '../../../types/active-params.type';
 import {ArticlesType} from '../../../types/articles.type';
-import {ArticleType} from '../../../types/article.type';
+import {ActiveParamsUtil} from '../../shared/util/active-params.util';
 
 @Component({
   selector: 'app-blog',
@@ -19,7 +19,7 @@ import {ArticleType} from '../../../types/article.type';
 })
 export class BlogComponent implements OnInit {
   categories: CategoryType[] = [];
-  activeParams: ActiveParamsType = {'categories[]': []};
+  activeParams: ActiveParamsType = {categories: []};
   articles?: ArticlesType;
 
 
@@ -31,7 +31,7 @@ export class BlogComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService.getCategory()
-      .subscribe(categories => {
+      .subscribe((categories: CategoryType[]) => {
         if (categories) {
           this.categories = categories;
         }
@@ -43,5 +43,28 @@ export class BlogComponent implements OnInit {
           this.articles = data;
         }
       });
+
+    this.activatedRoute.queryParams
+      .subscribe((params) => {
+        if (params) {
+          this.activeParams = ActiveParamsUtil.processParams(params);
+        }
+
+        if (!this.activeParams.page) {
+          this.activeParams.page = '1';
+        }
+      });
+  }
+
+  clickToCategory(category: string): void {
+    if (this.activeParams.categories!.includes(category)) {
+      this.activeParams.categories = this.activeParams.categories!.filter(item => item !== category);
+    } else {
+      this.activeParams.categories!.push(category);
+    }
+
+    this.router.navigate(['/blog'], {
+      queryParams: this.activeParams,
+    });
   }
 }
