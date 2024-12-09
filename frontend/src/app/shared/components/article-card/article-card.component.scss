@@ -25,6 +25,8 @@
     font-weight: 500;
     line-height: 130%;
     margin-bottom: 10px;
+    max-height: 78px;
+    overflow-y: auto;
 
     &.article-card-item-title {
       margin-bottom: 20px;

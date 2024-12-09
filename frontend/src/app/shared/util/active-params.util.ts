@@ -10,7 +10,11 @@ export class ActiveParamsUtil {
     }
 
     if (params.hasOwnProperty("page")) {
-      activeParams.page = params["page"];
+      if (params["page"] !== undefined) {
+        activeParams.page = Number(params["page"]);
+      } else {
+        activeParams.page = 1;
+      }
     }
 
     return activeParams;
