@@ -18,6 +18,7 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
+      min-height: 48px;
 
       .blog-category-filter-items {
         display: flex;
@@ -35,7 +36,7 @@
 
           span {
             position: relative;
-            top: 2px;
+            top: 1px;
             cursor: pointer;
           }
         }
@@ -43,10 +44,10 @@
 
       .blog-category-filter-sorting {
         position: relative;
-        width: 148px;
+        min-width: 148px;
 
         &.open {
-          width: 257px;
+          min-width: 257px;
 
           .blog-category-filter-sorting-head {
             padding: 12px 23px;

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ArticleCardComponent} from '../../shared/components/article-card/article-card.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArticlesService} from '../../shared/services/articles.service';
@@ -8,6 +8,7 @@ import {ActiveParamsType} from '../../../types/active-params.type';
 import {ArticlesType} from '../../../types/articles.type';
 import {ActiveParamsUtil} from '../../shared/util/active-params.util';
 import {AppliedCategoryType} from '../../../types/applied-category.type';
+import {ScrollToUtil} from '../../shared/util/scroll-to.util';
 
 @Component({
   selector: 'app-blog',
@@ -19,10 +20,14 @@ import {AppliedCategoryType} from '../../../types/applied-category.type';
   styleUrl: './blog.component.scss'
 })
 export class BlogComponent implements OnInit {
+  @ViewChild('blogTitle') blogTitleElement!: ElementRef;
+
   categories: CategoryType[] = [];
   activeParams: ActiveParamsType = {categories: []};
   articles?: ArticlesType;
   appliedCategories: AppliedCategoryType[] = [];
+  pages: number[] = [];
+  filterOpen: boolean = false;
 
 
   constructor(private router: Router,
@@ -37,7 +42,7 @@ export class BlogComponent implements OnInit {
         if (categories) {
           this.categories = categories;
         }
-    });
+      });
 
     this.activatedRoute.queryParams
       .subscribe((params) => {
@@ -63,7 +68,7 @@ export class BlogComponent implements OnInit {
             if (data.pages < this.activeParams.page!) {
               this.activeParams.page = 1;
               this.router.navigate(['/blog'], {
-                queryParams: this.activeParams,
+                queryParams: this.activeParams
               });
               return;
             }
@@ -71,8 +76,21 @@ export class BlogComponent implements OnInit {
             if (data && data.items && data.items.length > 0) {
               this.articles = data;
             }
+
+            this.pages = [];
+            for (let i = 1; i <= data.pages; i++) {
+              this.pages.push(i);
+            }
+
+            if (this.blogTitleElement) {
+              ScrollToUtil.scrollTo(this.blogTitleElement);
+            }
           });
       });
+  }
+
+  toggleFilter() {
+    this.filterOpen = !this.filterOpen;
   }
 
   clickToCategory(category: string): void {
@@ -86,15 +104,42 @@ export class BlogComponent implements OnInit {
     console.log(this.activeParams.categories);
 
     this.router.navigate(['/blog'], {
-      queryParams: this.activeParams,
+      queryParams: this.activeParams
     });
   }
 
   removeAppliedCategory(url: string): void {
-    this.appliedCategories.filter(item => item.url !== url);
-    this.activeParams.categories?.filter(item => item !== url);
+    this.appliedCategories = this.appliedCategories.filter(item => item.url !== url);
+    this.activeParams.categories = this.activeParams.categories?.filter(item => item !== url);
     this.router.navigate(['/blog'], {
-      queryParams: this.activeParams,
+      queryParams: this.activeParams
+    });
+  }
+
+  goNextPage(): void {
+    if (this.activeParams.page && this.activeParams.page < this.pages.length) {
+      this.activeParams.page++;
+
+      this.router.navigate(['/blog'], {
+        queryParams: this.activeParams
+      });
+    }
+  }
+
+  goPrevPage(): void {
+    if (this.activeParams.page && this.activeParams.page > 1) {
+      this.activeParams.page--;
+
+      this.router.navigate(['/blog'], {
+        queryParams: this.activeParams
+      });
+    }
+  }
+
+  clickToPage(pageNum: number): void {
+    this.activeParams.page = pageNum;
+    this.router.navigate(['/blog'], {
+      queryParams: this.activeParams
     });
   }
 }

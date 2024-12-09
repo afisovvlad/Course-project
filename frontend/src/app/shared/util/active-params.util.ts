@@ -15,6 +15,8 @@ export class ActiveParamsUtil {
       } else {
         activeParams.page = 1;
       }
+    } else {
+      activeParams.page = 1;
     }
 
     return activeParams;
