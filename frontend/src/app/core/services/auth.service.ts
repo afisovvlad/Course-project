@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {environment} from '../../../environments/environment.development';
 import {LoginResponseType} from '../../../types/login-response.type';
 import {DefaultResponseType} from '../../../types/default-response.type';
@@ -13,16 +13,23 @@ export class AuthService {
   refreshTokenKey: string = 'refreshToken';
   userIdKey: string = 'userId';
 
-  constructor(private http: HttpClient) { }
+  public isLoggedIn$: Subject<boolean> = new Subject<boolean>();
+  readonly isLoggedIn: boolean = false;
+
+  constructor(private http: HttpClient) {
+    this.isLoggedIn = !!localStorage.getItem(this.accessTokenKey);
+  }
 
   setTokens(accessToken: string, refreshToken: string) {
     localStorage.setItem(this.accessTokenKey, accessToken);
     localStorage.setItem(this.refreshTokenKey, refreshToken);
+    this.isLoggedIn$.next(true);
   }
 
   removeTokens() {
     localStorage.removeItem(this.accessTokenKey);
     localStorage.removeItem(this.refreshTokenKey);
+    this.isLoggedIn$.next(false);
   }
 
   getTokens(): {accessToken: string | null, refreshToken: string | null} {
@@ -42,6 +49,10 @@ export class AuthService {
     } else {
       localStorage.removeItem(this.userIdKey);
     }
+  }
+
+  getIsLoggedIn() {
+    return this.isLoggedIn;
   }
 
   login(email: string, password: string, rememberMe: boolean): Observable<LoginResponseType | DefaultResponseType> {

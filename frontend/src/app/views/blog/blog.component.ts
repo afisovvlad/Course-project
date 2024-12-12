@@ -28,6 +28,7 @@ export class BlogComponent implements OnInit {
   appliedCategories: AppliedCategoryType[] = [];
   pages: number[] = [];
   filterOpen: boolean = false;
+  updateKey: number = 0;
 
 
   constructor(private router: Router,
@@ -95,17 +96,28 @@ export class BlogComponent implements OnInit {
 
   clickToCategory(category: string): void {
     if (this.activeParams.categories!.includes(category)) {
-      console.log(this.activeParams.categories);
       this.activeParams.categories = this.activeParams.categories!.filter(item => item !== category);
     } else {
-      console.log(this.activeParams.categories);
       this.activeParams.categories!.push(category);
     }
-    console.log(this.activeParams.categories);
+
+    if (this.activeParams.categories!.length > 0) {
+      this.activeParams = {
+        ...this.activeParams,
+        updateKey: JSON.stringify(this.updateKey + 1),
+      }
+      this.updateKey++;
+    }
+
 
     this.router.navigate(['/blog'], {
-      queryParams: this.activeParams
+      queryParams: this.activeParams,
     });
+
+    this.activeParams = {
+      page: this.activeParams.page,
+      categories: this.activeParams.categories,
+    }
   }
 
   removeAppliedCategory(url: string): void {
@@ -121,7 +133,7 @@ export class BlogComponent implements OnInit {
       this.activeParams.page++;
 
       this.router.navigate(['/blog'], {
-        queryParams: this.activeParams
+        queryParams: this.activeParams,
       });
     }
   }

@@ -12,11 +12,8 @@ import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 import {NgStyle} from '@angular/common';
 import {RequestService} from '../../shared/services/request.service';
 import {DefaultResponseType} from '../../../types/default-response.type';
-
-import Swiper from 'swiper';
-import 'swiper/css/bundle';
-import {Navigation, Pagination} from 'swiper/modules';
 import {ModalService} from '../../shared/services/modal.service';
+import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-main',
@@ -28,7 +25,8 @@ import {ModalService} from '../../shared/services/modal.service';
     MatDialogContent,
     NgxMaskDirective,
     NgStyle,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CarouselModule,
   ],
   providers: [
     provideNgxMask(),
@@ -45,8 +43,36 @@ export class MainComponent implements OnInit {
   @ViewChild('consultationDialog') consultationDialog!: TemplateRef<ElementRef>;
   @ViewChild('orderDialogSelect') orderDialogSelect!: HTMLSelectElement;
   popularArticles: ArticleType[] = [];
-  mainSwiper!: Swiper;
-  reviewsSwiper!: Swiper;
+
+  mainCustomOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: false,
+    pullDrag: false,
+    dots: true,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      }
+    }
+  }
+
+  reviewsCustomOptions: OwlOptions = {
+    loop: true,
+    margin: 26,
+    mouseDrag: true,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 3
+      }
+    }
+  }
+
   orderDialogRef: MatDialogRef<any> | null = null;
   consultationDialogRef: MatDialogRef<any> | null = null;
   servicesArr: ServiceType[] = [
@@ -96,40 +122,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mainSwiper = new Swiper('.main-swiper', {
-      // вопрос: здесь если поставить true, то слайдеры почему-то будут конфликтовать, и неправильно работает бесконечный скролл, если убрать свойство rewind
-      loop: true,
-      rewind: true,
-      slidesPerView: 1,
-
-      modules: [Pagination, Navigation],
-
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-
-    this.reviewsSwiper = new Swiper('.reviews-swiper', {
-      loop: false,
-      rewind: true,
-      modules: [Navigation],
-
-      slidesPerView: 3,
-
-      spaceBetween: 25,
-
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-
     this.articleService.getPopularArticles()
       .subscribe({
         next: ((data: ArticleType[]) => {
@@ -156,7 +148,12 @@ export class MainComponent implements OnInit {
   }
 
   showModalService(service: string) {
-    this.orderDialogRef = this.dialog.open(this.orderDialog, {maxWidth: 'unset', minWidth: 'unset', maxHeight: 'unset', minHeight: 'unset'});
+    this.orderDialogRef = this.dialog.open(this.orderDialog, {
+      maxWidth: 'unset',
+      minWidth: 'unset',
+      maxHeight: 'unset',
+      minHeight: 'unset'
+    });
     setTimeout(() => {
       const orderSelectElement = document.getElementById('dialog-form-select') as HTMLSelectElement;
       const optionsSelectElement = Array.from(orderSelectElement.options);

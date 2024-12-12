@@ -1,16 +1,7 @@
+import {ArticleType} from './article.type';
+
 export type ArticlesType = {
   count: number,
   pages: number,
-  items: {
-    text?:  string,
-    comments?: [],
-    commentsCount?: number,
-    id: string,
-    title: string,
-    description: string,
-    image: string,
-    date: string,
-    category: string,
-    url: string
-  }[]
+  items: ArticleType[]
 }

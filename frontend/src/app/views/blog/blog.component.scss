@@ -19,6 +19,9 @@
       align-items: baseline;
       justify-content: space-between;
       min-height: 48px;
+      font-family: Montserrat, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
 
       .blog-category-filter-items {
         display: flex;
@@ -60,6 +63,8 @@
         }
 
         .blog-category-filter-sorting-head {
+          padding-top: 12px;
+          padding-bottom: 12px;
           display: flex;
           align-items: center;
           justify-content: space-between;

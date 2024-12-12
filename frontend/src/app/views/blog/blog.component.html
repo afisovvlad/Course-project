@@ -64,7 +64,7 @@
         </div>
 
         <div class="blog-category-filter-sorting-body">
-          @for (category of categories; track category) {
+          @for (category of categories; track category.url) {
             <div class="blog-category-filter-sorting-body-item"
                  [class.active]="activeParams.categories!.includes(category.url)"
                  (click)="clickToCategory(category.url)">

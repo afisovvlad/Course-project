@@ -1,0 +1,229 @@
+@import "../../../assets/styles/variables";
+
+.article {
+  padding-top: 80px;
+  padding-bottom: 120px;
+
+  .container {
+    .article-crumbs {
+      font-family: Montserrat, sans-serif;
+      font-size: 16px;
+      margin-bottom: 60px;
+
+      .static-crumbs {
+        color: rgb(185, 213, 253);
+        font-weight: 400;
+      }
+
+      .variable-crumbs {
+        color: $main-blue-color;
+        font-weight: 500;
+      }
+    }
+
+    .article-content {
+      display: flex;
+      justify-content: space-between;
+
+      .article-first-column {
+        max-width: 818px;
+
+        .article-first-column-social {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          span {
+            color: $main-blue-color;
+            font-family: Montserrat, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+          }
+
+          .article-first-column-social-icons {
+            position: relative;
+            top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            .article-first-column-social-icon {
+              cursor: pointer;
+            }
+          }
+        }
+
+        .article-first-column-comments {
+          margin-top: 120px;
+
+          .article-first-column-comments-title {
+            color: $main-blue-color;
+            font-family: Lora, sans-serif;
+            font-size: 38px;
+            font-weight: 400;
+            margin-bottom: 20px;
+          }
+
+          .article-first-column-comments-auth {
+            font-family: Montserrat, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 130%;
+            color: $main-dark-color;
+
+            span {
+              color: $main-blue-color;
+              cursor: pointer;
+            }
+          }
+
+          .article-first-column-comments-leave-comment {
+            padding-top: 20px;
+
+            textarea {
+              border: 2px solid $main-blue-color;
+              border-radius: 3px;
+              width: 818px;
+              height: 248px;
+              padding: 20px;
+              font-family: Montserrat, sans-serif;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 130%;
+              color: $main-blue-color;
+              margin-bottom: 20px;
+              outline: none;
+
+              &::placeholder {
+                color: rgb(168, 171, 167);
+              }
+            }
+
+            .article-first-column-comments-leave-comment-button {
+              padding: 15px 40px;
+              font-size: 16px;
+              font-weight: 400;
+            }
+          }
+
+          .article-first-column-comments-items {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 60px;
+
+            .article-first-column-comments-item {
+              .article-first-column-comments-item-header {
+                display: flex;
+                align-items: start;
+                margin-bottom: 15px;
+
+                .article-first-column-comments-item-header-image {
+                  margin-right: 26px;
+                }
+
+                .article-first-column-comments-item-header-info {
+                  .article-first-column-comments-item-header-info-name {
+                    color: $main-blue-color;
+                    font-family: Montserrat, sans-serif;
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                  }
+
+                  .article-first-column-comments-item-header-info-date {
+                    color: rgb(190, 190, 190);
+                    font-family: Montserrat, sans-serif;
+                    font-size: 14px;
+                    font-weight: 600;
+                  }
+                }
+              }
+
+              .article-first-column-comments-item-body {
+                margin-bottom: 39px;
+                color: $main-dark-color;
+                font-family: Montserrat, sans-serif;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 140%;
+              }
+
+              .article-first-column-comments-item-actions {
+                display: flex;
+                align-items: center;
+                gap: 17px;
+
+                .article-first-column-comments-item-action {
+                  display: flex;
+                  align-items: center;
+                  gap: 3px;
+
+                  .article-first-column-comments-item-actions-icon {
+                    position: relative;
+                    top: 2px;
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+          }
+
+          .article-first-column-comments-no-comments {
+            margin-top: 20px;
+            color: $main-dark-color;
+            font-family: Montserrat, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+          }
+
+          .article-first-column-comments-add-comments {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .article-first-column-comments-add-comments-text {
+              color: $main-blue-color;
+              font-family: Montserrat, sans-serif;
+              font-size: 20px;
+              font-weight: 500;
+              margin-top: 60px;
+            }
+          }
+        }
+      }
+
+      .article-second-column {
+        .article-second-column-image {
+          width: 527px;
+          height: 320px;
+          margin-bottom: 120px;
+          background-position: center;
+          background-size: cover;
+          border-radius: 5px;
+        }
+
+        .article-second-column-related {
+          display: flex;
+          flex-direction: column;
+          align-items: end;
+
+          .article-second-column-related-title {
+            margin-bottom: 20px;
+            margin-right: 98px;
+            color: $main-blue-color;
+            font-family: Lora, sans-serif;
+            font-size: 26px;
+            font-weight: 400;
+          }
+
+          .article-second-column-related-items {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+          }
+        }
+      }
+    }
+  }
+}

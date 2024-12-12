@@ -33,7 +33,7 @@
         Подробнее
       </button>
     } @else {
-      <a [routerLink]="'articles/' + article?.url" class="card-item-actions-continue">Читать дальше</a>
+      <a [routerLink]="['/blog', article?.url]" class="card-item-actions-continue">Читать дальше</a>
     }
   </div>
 </div>
