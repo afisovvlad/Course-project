@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
             this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
             this.authService.userId = loginResponse.userId;
             this._snackBar.open('Вы успешно зарегистрировались');
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
           }),
 
           error: (errorResponse: HttpErrorResponse) => {

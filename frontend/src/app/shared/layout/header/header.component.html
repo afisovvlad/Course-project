@@ -1,46 +1,68 @@
 <header class="header">
   <div class="container">
-    <div class="logo">
-      <img src="/images/logo.png" alt="Логотип">
-    </div>
-
-    <nav class="layout-navigation header-navigation">
-      <ul>
-        <li>
-          <a routerLink="">Услуги</a>
-        </li>
-        <li>
-          <a routerLink="">О нас</a>
-        </li>
-        <li>
-          <a routerLink="">Статьи</a>
-        </li>
-        <li>
-          <a routerLink="">Отзывы</a>
-        </li>
-        <li>
-          <a routerLink="">Контакты</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="header-phone">
-      <a href="tel:74993431334">
-        +7 (499) 343-13-34
-      </a>
-    </div>
-
-    <div class="header-actions">
-      <div class="header-actions-icon">
-        <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path id="Vector" d="M14.99 22L8.99 22C7.77 22 6.73 21.88 5.85 21.62C6.07 19.02 8.74 16.96 11.99 16.96C15.24 16.96 17.91 19.02 18.13 21.62C17.25 21.88 16.21 22 14.99 22Z" stroke="#071739" stroke-opacity="1.000000" stroke-width="1.300000" stroke-linejoin="round"/>
-          <path id="Vector" d="M9 2C4 2 2 4 2 9L2 15C2 18.78 3.13 20.85 5.86 21.62C6.08 19.02 8.75 16.96 12 16.96C15.25 16.96 17.91 19.02 18.13 21.62C20.86 20.85 22 18.78 22 15L22 9C22 4 20 2 15 2L9 2ZM8.41 10.58C8.41 8.59 10.02 7 12 7C13.98 7 15.58 8.59 15.58 10.58C15.58 12.56 13.98 14.17 12 14.17C10.02 14.17 8.41 12.56 8.41 10.58Z" stroke="#071739" stroke-opacity="1.000000" stroke-width="1.300000" stroke-linejoin="round"/>
-          <path id="Vector" d="M12 14.16C10.02 14.16 8.41 12.56 8.41 10.58C8.41 8.59 10.02 7 12 7C13.98 7 15.57 8.59 15.57 10.58C15.57 12.56 13.98 14.16 12 14.16Z" stroke="#071739" stroke-opacity="1.000000" stroke-width="1.300000" stroke-linejoin="round"/>
-        </svg>
+    <div>
+      <div class="logo" routerLink="/">
+        <img src="/images/logo.png" alt="Логотип">
       </div>
 
-      <div class="header-actions-text" routerLink="/login">
-        Войти
+      <nav class="layout-navigation header-navigation">
+        <ul>
+          <li>
+            <a routerLink="/" fragment="services" [class.active]="isFragmentActive('services')">Услуги</a>
+          </li>
+          <li>
+            <a routerLink="/" fragment="advantages" [class.active]="isFragmentActive('advantages')">О нас</a>
+          </li>
+          <li>
+            <a routerLink="/blog" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Статьи</a>
+          </li>
+          <li>
+            <a routerLink="/" fragment="reviews" [class.active]="isFragmentActive('reviews')">Отзывы</a>
+          </li>
+          <li>
+            <a routerLink="/" fragment="contact" [class.active]="isFragmentActive('contact')">Контакты</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div>
+      <div class="header-phone">
+        <a href="tel:74993431334">
+          +7 (499) 343-13-34
+        </a>
+      </div>
+
+      <div class="header-actions">
+        <div class="header-actions-icon">
+          <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path id="Vector"
+                  d="M14.99 22L8.99 22C7.77 22 6.73 21.88 5.85 21.62C6.07 19.02 8.74 16.96 11.99 16.96C15.24 16.96 17.91 19.02 18.13 21.62C17.25 21.88 16.21 22 14.99 22Z"
+                  stroke="#071739" stroke-opacity="1.000000" stroke-width="1.300000" stroke-linejoin="round"/>
+            <path id="Vector"
+                  d="M9 2C4 2 2 4 2 9L2 15C2 18.78 3.13 20.85 5.86 21.62C6.08 19.02 8.75 16.96 12 16.96C15.25 16.96 17.91 19.02 18.13 21.62C20.86 20.85 22 18.78 22 15L22 9C22 4 20 2 15 2L9 2ZM8.41 10.58C8.41 8.59 10.02 7 12 7C13.98 7 15.58 8.59 15.58 10.58C15.58 12.56 13.98 14.17 12 14.17C10.02 14.17 8.41 12.56 8.41 10.58Z"
+                  stroke="#071739" stroke-opacity="1.000000" stroke-width="1.300000" stroke-linejoin="round"/>
+            <path id="Vector"
+                  d="M12 14.16C10.02 14.16 8.41 12.56 8.41 10.58C8.41 8.59 10.02 7 12 7C13.98 7 15.57 8.59 15.57 10.58C15.57 12.56 13.98 14.16 12 14.16Z"
+                  stroke="#071739" stroke-opacity="1.000000" stroke-width="1.300000" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        @if (!isLoggedIn) {
+          <div class="header-actions-text" routerLink="/login">
+            Войти
+          </div>
+        } @else {
+          <div class="header-actions-text" [matMenuTriggerFor]="menu">
+            Привет, {{ userInfo?.name }}
+          </div>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">
+              <span>Выход</span>
+            </button>
+          </mat-menu>
+        }
       </div>
     </div>
   </div>
