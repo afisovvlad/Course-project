@@ -1,4 +1,13 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ElementRef,
+  Inject,
+  inject, OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {ArticleCardComponent} from '../../shared/components/article-card/article-card.component';
 import {ServiceType} from '../../../types/service.type';
 import {ArticlesService} from '../../shared/services/articles.service';
@@ -9,11 +18,11 @@ import {RouterLink} from '@angular/router';
 import {MatDialog, MatDialogClose, MatDialogContent, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgxMaskDirective, provideNgxMask} from 'ngx-mask';
-import {NgStyle} from '@angular/common';
+import {DOCUMENT, NgStyle} from '@angular/common';
 import {RequestService} from '../../shared/services/request.service';
 import {DefaultResponseType} from '../../../types/default-response.type';
-import {ModalService} from '../../shared/services/modal.service';
 import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -35,12 +44,12 @@ import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
   styleUrl: './main.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private _snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
+
   @ViewChild('orderDialog') orderDialog!: TemplateRef<ElementRef>;
-  @ViewChild('consultationDialog') consultationDialog!: TemplateRef<ElementRef>;
   @ViewChild('orderDialogSelect') orderDialogSelect!: HTMLSelectElement;
   popularArticles: ArticleType[] = [];
 
@@ -74,7 +83,6 @@ export class MainComponent implements OnInit {
   }
 
   orderDialogRef: MatDialogRef<any> | null = null;
-  consultationDialogRef: MatDialogRef<any> | null = null;
   servicesArr: ServiceType[] = [
     {
       image: '/images/services-image-1.png',
@@ -102,27 +110,23 @@ export class MainComponent implements OnInit {
     },
   ];
   unsuccessfulOrderRequest: string = '';
-  unsuccessfulConsultationRequest: string = '';
   successfulOrderRequest: boolean = false;
-  successfulConsultationRequest: boolean = false;
+  orderSelectElement: HTMLSelectElement | null = null;
+
+  private subs: Subscription = new Subscription()
 
   orderForm = this.fb.group({
     name: ['', Validators.required],
     phone: ['', [Validators.required, Validators.minLength(10)]]
   });
 
-  consultationForm = this.fb.group({
-    name: ['', Validators.required],
-    phone: ['', [Validators.required, Validators.minLength(10)]]
-  });
-
   constructor(private articleService: ArticlesService,
               private requestService: RequestService,
-              private modalService: ModalService) {
+              @Inject(DOCUMENT) private document: Document) {
   }
 
   ngOnInit() {
-    this.articleService.getPopularArticles()
+    this.subs.add(this.articleService.getPopularArticles()
       .subscribe({
         next: ((data: ArticleType[]) => {
           this.popularArticles = data;
@@ -135,16 +139,7 @@ export class MainComponent implements OnInit {
             this._snackBar.open('Ошибка запроса');
           }
         }
-      });
-
-    this.modalService.modalHandler$.subscribe(() => {
-      this.consultationDialogRef = this.dialog.open(this.consultationDialog, {
-        maxWidth: 'unset',
-        minWidth: 'unset',
-        maxHeight: 'unset',
-        minHeight: 'unset'
-      });
-    });
+      }));
   }
 
   showModalService(service: string) {
@@ -154,19 +149,28 @@ export class MainComponent implements OnInit {
       maxHeight: 'unset',
       minHeight: 'unset'
     });
+
+    if (this.orderDialogRef) {
+      this.subs.add(this.orderDialogRef.afterClosed().subscribe(() => {
+        this.closeOrderModal();
+      }));
+    }
+
     setTimeout(() => {
-      const orderSelectElement = document.getElementById('dialog-form-select') as HTMLSelectElement;
-      const optionsSelectElement = Array.from(orderSelectElement.options);
+      this.orderSelectElement = this.document.getElementById('dialog-form-select') as HTMLSelectElement;
+      const optionsSelectElement = Array.from(this.orderSelectElement.options);
       optionsSelectElement.find(option => option.value === service)!.selected = true;
     }, 0)
   }
 
   orderRequest() {
     if (this.orderForm.valid) {
-      const orderSelectElement = document.getElementById('dialog-form-select') as HTMLSelectElement;
+      if (!this.orderSelectElement) {
+        this.orderSelectElement = this.document.getElementById('dialog-form-select') as HTMLSelectElement;
+      }
 
-      if (this.orderForm.value.name && this.orderForm.value.phone && orderSelectElement.value) {
-        this.requestService.orderRequest(this.orderForm.value.name, this.orderForm.value.phone, orderSelectElement.value)
+      if (this.orderForm.value.name && this.orderForm.value.phone && this.orderSelectElement.value) {
+        this.subs.add(this.requestService.orderRequest(this.orderForm.value.name, this.orderForm.value.phone, this.orderSelectElement.value)
           .subscribe({
             next: ((data: DefaultResponseType) => {
               if (data.error) {
@@ -181,35 +185,10 @@ export class MainComponent implements OnInit {
                 this.unsuccessfulOrderRequest = 'Произошла ошибка при отправке формы, попробуйте еще раз.'
               }
             }
-          });
+          }));
       }
     } else {
       this.orderForm.markAllAsTouched();
-    }
-  }
-
-  consultationRequest() {
-    if (this.consultationForm.valid) {
-      if (this.consultationForm.value.name && this.consultationForm.value.phone) {
-        this.requestService.consultationRequest(this.consultationForm.value.name, this.consultationForm.value.phone)
-          .subscribe({
-            next: ((data: DefaultResponseType) => {
-              if (data.error) {
-                this.unsuccessfulConsultationRequest = 'Произошла ошибка при отправке формы, попробуйте еще раз.'
-              } else {
-                this.successfulConsultationRequest = true;
-              }
-            }),
-
-            error: (errorResponse: HttpErrorResponse) => {
-              if (errorResponse.error) {
-                this.unsuccessfulConsultationRequest = 'Произошла ошибка при отправке формы, попробуйте еще раз.'
-              }
-            }
-          });
-      }
-    } else {
-      this.consultationForm.markAllAsTouched();
     }
   }
 
@@ -217,11 +196,11 @@ export class MainComponent implements OnInit {
     this.orderDialogRef?.close();
     this.successfulOrderRequest = false;
     this.unsuccessfulOrderRequest = '';
+    this.orderForm.markAsUntouched();
+    this.orderForm.markAsPristine();
   }
 
-  closeConsultationModal(): void {
-    this.consultationDialogRef?.close();
-    this.successfulConsultationRequest = false;
-    this.unsuccessfulConsultationRequest = '';
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 }

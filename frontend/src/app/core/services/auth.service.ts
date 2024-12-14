@@ -51,9 +51,7 @@ export class AuthService {
   }
 
   getUserInfo(): Observable<UserInfoType | DefaultResponseType> {
-    return this.http.get<UserInfoType | DefaultResponseType>(environment.api + 'users', {
-      headers: {'x-auth': JSON.stringify(localStorage.getItem(this.accessTokenKey))}
-    });
+    return this.http.get<UserInfoType | DefaultResponseType>(environment.api + 'users');
   }
 
   getIsLoggedIn() {

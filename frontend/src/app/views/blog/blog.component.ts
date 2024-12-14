@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ArticleCardComponent} from '../../shared/components/article-card/article-card.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ArticlesService} from '../../shared/services/articles.service';
@@ -9,6 +9,7 @@ import {ArticlesType} from '../../../types/articles.type';
 import {ActiveParamsUtil} from '../../shared/util/active-params.util';
 import {AppliedCategoryType} from '../../../types/applied-category.type';
 import {ScrollToUtil} from '../../shared/util/scroll-to.util';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-blog',
@@ -19,7 +20,7 @@ import {ScrollToUtil} from '../../shared/util/scroll-to.util';
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.scss'
 })
-export class BlogComponent implements OnInit {
+export class BlogComponent implements OnInit, OnDestroy {
   @ViewChild('blogTitle') blogTitleElement!: ElementRef;
 
   categories: CategoryType[] = [];
@@ -30,6 +31,7 @@ export class BlogComponent implements OnInit {
   filterOpen: boolean = false;
   updateKey: number = 0;
 
+private subs: Subscription = new Subscription();
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -38,14 +40,14 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getCategory()
+    this.subs.add(this.categoryService.getCategory()
       .subscribe((categories: CategoryType[]) => {
         if (categories) {
           this.categories = categories;
         }
-      });
+      }));
 
-    this.activatedRoute.queryParams
+    this.subs.add(this.activatedRoute.queryParams
       .subscribe((params) => {
         if (params) {
           this.activeParams = ActiveParamsUtil.processParams(params);
@@ -64,7 +66,7 @@ export class BlogComponent implements OnInit {
           });
         }
 
-        this.articlesService.getArticles(this.activeParams)
+        this.subs.add(this.articlesService.getArticles(this.activeParams)
           .subscribe((data: ArticlesType) => {
             if (data.pages < this.activeParams.page!) {
               this.activeParams.page = 1;
@@ -86,8 +88,8 @@ export class BlogComponent implements OnInit {
             if (this.blogTitleElement) {
               ScrollToUtil.scrollTo(this.blogTitleElement);
             }
-          });
-      });
+          }));
+      }));
   }
 
   toggleFilter() {
@@ -112,7 +114,7 @@ export class BlogComponent implements OnInit {
 
     this.router.navigate(['/blog'], {
       queryParams: this.activeParams,
-    });
+    }).then();
 
     this.activeParams = {
       page: this.activeParams.page,
@@ -134,7 +136,7 @@ export class BlogComponent implements OnInit {
 
       this.router.navigate(['/blog'], {
         queryParams: this.activeParams,
-      });
+      }).then();
     }
   }
 
@@ -144,7 +146,7 @@ export class BlogComponent implements OnInit {
 
       this.router.navigate(['/blog'], {
         queryParams: this.activeParams
-      });
+      }).then();
     }
   }
 
@@ -152,6 +154,10 @@ export class BlogComponent implements OnInit {
     this.activeParams.page = pageNum;
     this.router.navigate(['/blog'], {
       queryParams: this.activeParams
-    });
+    }).then();
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 }

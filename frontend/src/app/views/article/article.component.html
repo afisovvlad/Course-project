@@ -1,12 +1,13 @@
 <div class="article">
   <div class="container">
     <div class="article-crumbs">
-      <span class="static-crumbs" routerLink="/blog">Блог / </span><span class="variable-crumbs">{{article!.title}}</span>
+      <span class="static-crumbs" routerLink="/blog">Блог / </span><span
+      class="variable-crumbs">{{ article.title }}</span>
     </div>
 
     <div class="article-content">
       <div class="article-first-column">
-        <div class="article-first-column-text" [innerHTML]="article!.text"></div>
+        <div class="article-first-column-text" [innerHTML]="article.text"></div>
 
         <div class="article-first-column-social">
           <span>Понравилась статья? Поделитесь ею в своих социальных сетях!</span>
@@ -83,93 +84,118 @@
             </div>
           }
 
-          @if (article!.comments!.length === 0) {
+          @if (article.comments?.length === 0) {
             <div class="article-first-column-comments-no-comments" [style.margin-bottom]="isLoggedIn ? '20px' : '0'">
               Будьте первым, кто оставит свой комментарий к статье!
             </div>
           }
 
           @if (isLoggedIn) {
-            <div class="article-first-column-comments-leave-comment">
-              <textarea class="" placeholder="Напишите Ваш комментарий к статье..."></textarea>
+            <div class="article-first-column-comments-leave-comment" [formGroup]="commentForm">
+              <textarea placeholder="Напишите Ваш комментарий к статье..." formControlName="comment"
+                        #textAreaElement></textarea>
 
-              <button class="button article-first-column-comments-leave-comment-button">
+              <button type="button" class="button article-first-column-comments-leave-comment-button"
+                      (click)="addComment()">
                 Опубликовать комментарий
               </button>
             </div>
           }
-
-          @if (article!.comments!.length > 0) {
-            <div class="article-first-column-comments-items">
-              @for (articleComment of article!.comments; track articleComment) {
-                <div class="article-first-column-comments-item">
-                  <div class="article-first-column-comments-item-header">
-                    <div class="article-first-column-comments-item-header-image">
-                      <svg width="60.000000" height="60.000000" viewBox="0 0 60 60" fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                        <defs/>
-                        <circle id="Ellipse 31" cx="30.000000" cy="30.000000" r="30.000000" fill="#B9D5FD"
-                                fill-opacity="1.000000"/>
-                        <circle id="Ellipse 31" cx="30.000000" cy="30.000000" r="29.000000" stroke="#709FDC"
-                                stroke-opacity="1.000000" stroke-width="2.000000"/>
-                        <mask id="mask106_256" mask-type="alpha" maskUnits="userSpaceOnUse" x="0.000000" y="0.000000"
-                              width="60.000000" height="60.000000">
-                          <circle id="Ellipse 25" cx="30.000000" cy="30.000000" r="30.000000" fill="#C4C4C4"
+          @if (comments.comments) {
+            @if (comments.comments.length > 0) {
+              <div class="article-first-column-comments-items">
+                @for (comment of comments.comments; track comment) {
+                  <div class="article-first-column-comments-item">
+                    <div class="article-first-column-comments-item-header">
+                      <div class="article-first-column-comments-item-header-image">
+                        <svg width="60.000000" height="60.000000" viewBox="0 0 60 60" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                          <defs/>
+                          <circle id="Ellipse 31" cx="30.000000" cy="30.000000" r="30.000000" fill="#B9D5FD"
                                   fill-opacity="1.000000"/>
-                        </mask>
-                        <g mask="url(#mask106_256)">
-                          <circle id="Ellipse 29" cx="29.975098" cy="22.736816" r="11.736842" stroke="#709FDC"
+                          <circle id="Ellipse 31" cx="30.000000" cy="30.000000" r="29.000000" stroke="#709FDC"
                                   stroke-opacity="1.000000" stroke-width="2.000000"/>
-                          <path id="Subtract"
-                                d="M8.00464 55.0001L10.0076 55.0001C10.6074 44.4932 19.3176 36.158 29.9746 36.158C40.6318 36.158 49.342 44.4932 49.9417 55.0001L51.9448 55.0001C51.3425 43.3881 41.7366 34.158 29.9746 34.158C18.2129 34.158 8.60669 43.3881 8.00464 55.0001Z"
-                                clip-rule="evenodd" fill="#709FDC" fill-opacity="1.000000" fill-rule="evenodd"/>
-                        </g>
-                      </svg>
-                    </div>
-
-                    <div class="article-first-column-comments-item-header-info">
-                      <div class="article-first-column-comments-item-header-info-name">
-                        Амелия
+                          <mask id="mask106_256" mask-type="alpha" maskUnits="userSpaceOnUse" x="0.000000" y="0.000000"
+                                width="60.000000" height="60.000000">
+                            <circle id="Ellipse 25" cx="30.000000" cy="30.000000" r="30.000000" fill="#C4C4C4"
+                                    fill-opacity="1.000000"/>
+                          </mask>
+                          <g mask="url(#mask106_256)">
+                            <circle id="Ellipse 29" cx="29.975098" cy="22.736816" r="11.736842" stroke="#709FDC"
+                                    stroke-opacity="1.000000" stroke-width="2.000000"/>
+                            <path id="Subtract"
+                                  d="M8.00464 55.0001L10.0076 55.0001C10.6074 44.4932 19.3176 36.158 29.9746 36.158C40.6318 36.158 49.342 44.4932 49.9417 55.0001L51.9448 55.0001C51.3425 43.3881 41.7366 34.158 29.9746 34.158C18.2129 34.158 8.60669 43.3881 8.00464 55.0001Z"
+                                  clip-rule="evenodd" fill="#709FDC" fill-opacity="1.000000" fill-rule="evenodd"/>
+                          </g>
+                        </svg>
                       </div>
 
-                      <div class="article-first-column-comments-item-header-info-date">
-                        20.01.2023 23:00
+                      <div class="article-first-column-comments-item-header-info">
+                        <div class="article-first-column-comments-item-header-info-name">
+                          {{ comment.user.name }}
+                        </div>
+
+                        <div class="article-first-column-comments-item-header-info-date"
+                             [innerText]="formatingDate(comment.date)"></div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="article-first-column-comments-item-body">
-                    Статья супер, спасибо! Взяла на заметку очень многое для себя и своей фирмы по разработке
-                    пользовательского
-                    интерфейса. Хотелось бы послушать мнение других тоже!
-                  </div>
-
-                  <div class="article-first-column-comments-item-actions">
-                    <div class="article-first-column-comments-item-action article-first-column-comments-item-actions-like">
-                      <span class="comment-actions-like-number">51</span>
-
-                      <span
-                        class="article-first-column-comments-item-actions-icon article-first-column-comments-item-actions-like-icon">
-                    <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-	<defs/>
-	<path id="Vector"
-        d="M7.47 18.35L10.58 20.75C10.98 21.15 11.88 21.35 12.48 21.35L16.28 21.35C17.48 21.35 18.78 20.45 19.08 19.25L21.48 11.95C21.98 10.54 21.08 9.34 19.58 9.34L15.58 9.34C14.98 9.34 14.48 8.84 14.58 8.15L15.08 4.94C15.28 4.04 14.67 3.04 13.78 2.75C12.98 2.44 11.98 2.84 11.58 3.44L7.47 9.54"
-        stroke="#071739" stroke-opacity="1.000000" stroke-width="1.500000"/>
-	<path id="Vector"
-        d="M2.37 8.54C2.37 7.14 2.97 6.64 4.37 6.64L5.37 6.64C6.77 6.64 7.37 7.14 7.37 8.54L7.37 18.34C7.37 19.74 6.77 20.24 5.37 20.24L4.37 20.24C2.97 20.24 2.37 19.74 2.37 18.34L2.37 8.54Z"
-        stroke="#071739" stroke-opacity="1.000000" stroke-width="1.500000" stroke-linejoin="round"/>
-	<g opacity="0.000000"/>
-</svg>
-                  </span>
+                    <div class="article-first-column-comments-item-body">
+                      {{ comment.text }}
                     </div>
 
-                    <div
-                      class="article-first-column-comments-item-action article-first-column-comments-item-actions-dislike">
-                      <span class="article-first-column-comments-item-actions-dislike-number">51</span>
+                    <div class="article-first-column-comments-item-actions">
+                      <div
+                        class="article-first-column-comments-item-action article-first-column-comments-item-actions-like"
+                        (click)="addActionForComment('like', comment.id)" #actionLike
+                      [class.active]="">
 
-                      <span
-                        class="article-first-column-comments-item-actions-icon article-first-column-comments-item-actions-dislike-icon">
+                        <span class="article-first-column-comments-item-action-number">{{ comment.likesCount }}</span>
+
+                        @if (actionLike.classList.contains('active')) {
+                          <span
+                            class="article-first-column-comments-item-actions-icon article-first-column-comments-item-actions-like-icon">
+                           <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                            <defs/>
+                            <path id="Vector"
+                                  d="M7.47 18.35L10.58 20.75C10.98 21.15 11.88 21.35 12.48 21.35L16.28 21.35C17.48 21.35 18.78 20.45 19.08 19.25L21.48 11.95C21.98 10.54 21.08 9.34 19.58 9.34L15.58 9.34C14.98 9.34 14.48 8.84 14.58 8.15L15.08 4.94C15.28 4.04 14.67 3.04 13.78 2.75C12.98 2.44 11.98 2.84 11.58 3.44L7.47 9.54"
+                                  stroke="#709FDCFF" stroke-opacity="1.000000" stroke-width="1.500000"/>
+                            <path id="Vector"
+                                  d="M2.37 8.54C2.37 7.14 2.97 6.64 4.37 6.64L5.37 6.64C6.77 6.64 7.37 7.14 7.37 8.54L7.37 18.34C7.37 19.74 6.77 20.24 5.37 20.24L4.37 20.24C2.97 20.24 2.37 19.74 2.37 18.34L2.37 8.54Z"
+                                  stroke="#709FDCFF" stroke-opacity="1.000000" stroke-width="1.500000"
+                                  stroke-linejoin="round"/>
+                            <g opacity="0.000000"/>
+                          </svg>
+                         </span>
+
+                        } @else {
+                          <span
+                            class="article-first-column-comments-item-actions-icon article-first-column-comments-item-actions-like-icon">
+                           <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                            <defs/>
+                            <path id="Vector"
+                                  d="M7.47 18.35L10.58 20.75C10.98 21.15 11.88 21.35 12.48 21.35L16.28 21.35C17.48 21.35 18.78 20.45 19.08 19.25L21.48 11.95C21.98 10.54 21.08 9.34 19.58 9.34L15.58 9.34C14.98 9.34 14.48 8.84 14.58 8.15L15.08 4.94C15.28 4.04 14.67 3.04 13.78 2.75C12.98 2.44 11.98 2.84 11.58 3.44L7.47 9.54"
+                                  stroke="#071739" stroke-opacity="1.000000" stroke-width="1.500000"/>
+                            <path id="Vector"
+                                  d="M2.37 8.54C2.37 7.14 2.97 6.64 4.37 6.64L5.37 6.64C6.77 6.64 7.37 7.14 7.37 8.54L7.37 18.34C7.37 19.74 6.77 20.24 5.37 20.24L4.37 20.24C2.97 20.24 2.37 19.74 2.37 18.34L2.37 8.54Z"
+                                  stroke="#071739" stroke-opacity="1.000000" stroke-width="1.500000"
+                                  stroke-linejoin="round"/>
+                            <g opacity="0.000000"/>
+                          </svg>
+                         </span>
+                        }
+                      </div>
+
+                      <div
+                        class="article-first-column-comments-item-action article-first-column-comments-item-actions-dislike"
+                        (click)="addActionForComment('dislike', comment.id)">
+                        <span
+                          class="article-first-column-comments-item-action-number">{{ comment.dislikesCount }}</span>
+
+                        <span
+                          class="article-first-column-comments-item-actions-icon article-first-column-comments-item-actions-dislike-icon">
                     <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
 	<defs/>
@@ -182,11 +208,13 @@
 	<g opacity="0.000000"/>
     </svg>
                   </span>
-                    </div>
+                      </div>
 
-                    <div class="article-first-column-comments-item-action article-first-column-comments-item-actions-spam">
-                  <span
-                    class="article-first-column-comments-item-actions-icon article-first-column-comments-item-actions-spam-icon">
+                      <div
+                        class="article-first-column-comments-item-action article-first-column-comments-item-actions-spam"
+                        (click)="addActionForComment('violate', comment.id)">
+                          <span
+                            class="article-first-column-comments-item-actions-icon article-first-column-comments-item-actions-spam-icon">
                     <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
 	<defs/>
@@ -199,34 +227,55 @@
 	<g opacity="0.000000"/>
 </svg>
                   </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              }
-            </div>
+                }
+              </div>
+              @if (comments && comments.allCount && comments.comments) {
+                @if (comments.allCount > comments.comments.length) {
+                  <div class="article-first-column-comments-add-comments" (click)="addComments()">
+                    <span class="article-first-column-comments-add-comments-text">
+                        Загрузить ещё комментарии
+                    </span>
 
-            @if (comments.allCount! > comments.comments!.length) {
-              <div class="article-first-column-comments-add-comments">
-                <span class="article-first-column-comments-add-comments-text">
-                    Загрузить ещё комментарии
-                </span>
-
-                <span>
-                  <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <span class="article-first-column-comments-add-comments-icon">
+                      <svg width="20.000000" height="20.000000" viewBox="0 0 20 20" fill="none"
+                           xmlns="http://www.w3.org/2000/svg">
 	<defs/>
-	<rect id="Arrow" rx="0.000000" width="19.000000" height="19.000000" transform="translate(0.500000 0.500000)" fill="#FFFFFF" fill-opacity="0"/>
-	<path id="Vector" d="M10 14C9.41 14 8.83 13.77 8.39 13.33L2.95 7.9C2.71 7.65 2.71 7.25 2.95 7.01C3.19 6.77 3.6 6.77 3.84 7.01L9.27 12.45C9.67 12.85 10.32 12.85 10.72 12.45L16.15 7.01C16.39 6.77 16.79 6.77 17.04 7.01C17.28 7.25 17.28 7.65 17.04 7.9L11.6 13.33C11.16 13.77 10.58 14 10 14Z" fill="#709FDC" fill-opacity="1.000000" fill-rule="nonzero"/>
+	<rect id="Arrow" rx="0.000000" width="19.000000" height="19.000000" transform="translate(0.500000 0.500000)"
+        fill="#FFFFFF" fill-opacity="0"/>
+	<path id="Vector"
+        d="M10 14C9.41 14 8.83 13.77 8.39 13.33L2.95 7.9C2.71 7.65 2.71 7.25 2.95 7.01C3.19 6.77 3.6 6.77 3.84 7.01L9.27 12.45C9.67 12.85 10.32 12.85 10.72 12.45L16.15 7.01C16.39 6.77 16.79 6.77 17.04 7.01C17.28 7.25 17.28 7.65 17.04 7.9L11.6 13.33C11.16 13.77 10.58 14 10 14Z"
+        fill="#709FDC" fill-opacity="1.000000" fill-rule="nonzero"/>
 	<g opacity="0.000000"/>
 </svg>
-                </span>
-              </div>
+                    </span>
+                  </div>
+                }
+              }
             }
           }
+
+          <!--          <span class="loader">-->
+          <!--                <svg width="100.000000" height="100.000000" viewBox="0 0 160 160" fill="none"-->
+          <!--                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">-->
+          <!--	<defs>-->
+          <!--		<pattern id="pattern_114_9710" patternContentUnits="objectBoundingBox" width="1.000000" height="1.000000">-->
+          <!--			<use xlink:href="#image114_971_0" transform="matrix(0.001953,0,0,0.001953,0,0)"/>-->
+          <!--		</pattern>-->
+          <!--		<image id="image114_971_0" width="512.000000" height="512.000000"-->
+          <!--           xlink:href="data:image/png;base64,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"/>-->
+          <!--	</defs>-->
+          <!--	<rect id="Loader" width="160.000000" height="160.000000" fill="url(#pattern_114_9710)" fill-opacity="1.000000"/>-->
+          <!--</svg>-->
+          <!--            </span>-->
         </div>
       </div>
 
       <div class="article-second-column">
-        <div class="article-second-column-image" style="background-image: url({{environment.serverStaticPath + article.image}})"></div>
+        <div class="article-second-column-image"
+             style="background-image: url({{environment.serverStaticPath + article.image}})"></div>
 
         <div class="article-second-column-related">
           @if (relatedArticles) {

@@ -1,21 +1,23 @@
-import {Component} from '@angular/core';
-import {RouterLink} from "@angular/router";
-import {ModalService} from '../../services/modal.service';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-    imports: [
-        RouterLink
-    ],
+  imports: [
+    RouterLink,
+    RouterLinkActive
+  ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  constructor(private modalService: ModalService) {
+  @Output() callModal = new EventEmitter<boolean>();
+
+  constructor() {
   }
 
   clickToCallMe(): void {
-    this.modalService.modalHandler$.next(true);
+    this.callModal.emit(true);
   }
 }

@@ -36,4 +36,10 @@
       <a [routerLink]="['/blog', article?.url]" class="card-item-actions-continue">Читать дальше</a>
     }
   </div>
+
+  @if (isArticleCard) {
+    <div class="card-item-category">
+      {{article?.category}}
+    </div>
+  }
 </div>

@@ -1,4 +1,5 @@
 @import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
 
 .article {
   padding-top: 80px;
@@ -26,7 +27,9 @@
       justify-content: space-between;
 
       .article-first-column {
-        max-width: 818px;
+        .article-first-column-text {
+          width: 818px;
+        }
 
         .article-first-column-social {
           display: flex;
@@ -57,10 +60,7 @@
           margin-top: 120px;
 
           .article-first-column-comments-title {
-            color: $main-blue-color;
-            font-family: Lora, sans-serif;
-            font-size: 38px;
-            font-weight: 400;
+            @include head-lora-36;
             margin-bottom: 20px;
           }
 
@@ -83,7 +83,7 @@
             textarea {
               border: 2px solid $main-blue-color;
               border-radius: 3px;
-              width: 818px;
+              width: 100%;
               height: 248px;
               padding: 20px;
               font-family: Montserrat, sans-serif;
@@ -93,6 +93,8 @@
               color: $main-blue-color;
               margin-bottom: 20px;
               outline: none;
+              position: relative;
+              z-index: 3;
 
               &::placeholder {
                 color: rgb(168, 171, 167);
@@ -159,6 +161,13 @@
                   align-items: center;
                   gap: 3px;
 
+                  .article-first-column-comments-item-action-number {
+                    color: $main-dark-color;
+                    font-family: Montserrat, sans-serif;
+                    font-size: 14px;
+                    font-weight: 600;
+                  }
+
                   .article-first-column-comments-item-actions-icon {
                     position: relative;
                     top: 2px;
@@ -181,19 +190,41 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
+            margin-top: 60px;
 
             .article-first-column-comments-add-comments-text {
               color: $main-blue-color;
               font-family: Montserrat, sans-serif;
               font-size: 20px;
               font-weight: 500;
-              margin-top: 60px;
+            }
+
+            .article-first-column-comments-add-comments-icon {
+              position: relative;
+              top: 2px;
+            }
+          }
+
+          .loader svg {
+            animation: rotate 1.5s linear infinite;
+          }
+
+          @keyframes rotate {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
             }
           }
         }
       }
 
       .article-second-column {
+        position: relative;
+        right: 105px;
+
         .article-second-column-image {
           width: 527px;
           height: 320px;

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {environment} from '../../../environments/environment.development';
 import {ArticlesService} from '../../shared/services/articles.service';
@@ -7,55 +7,90 @@ import {ArticleType} from '../../../types/article.type';
 import {AuthService} from '../../core/services/auth.service';
 import {CommentsParamsType} from '../../../types/comments-params.type';
 import {CommentsResponseType} from '../../../types/comments-response.type';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgStyle} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ActionsCommentType} from '../../../types/actions-comment.type';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-article',
   standalone: true,
   imports: [
     RouterLink,
-    ArticleCardComponent
+    ArticleCardComponent,
+    ReactiveFormsModule,
+    NgStyle
   ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss'
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
   readonly environment = environment;
 
   relatedArticles: ArticleType[] | null = [];
-  article!: ArticleType;
+  article: ArticleType;
   isLoggedIn: boolean = false;
   comments: CommentsResponseType = {};
-  commentsParams!: CommentsParamsType;
+  commentsParams: CommentsParamsType;
+  commentForm!: FormGroup;
+  actionsForComments: ActionsCommentType[] = [];
+  private _snackBar = inject(MatSnackBar);
+
+  private subs: Subscription = new Subscription();
+
+  @ViewChild('textAreaElement') textAreaElement!: ElementRef<HTMLTextAreaElement>;
 
   constructor(private articlesService: ArticlesService,
               private authService: AuthService,
-              private activatedRoute: ActivatedRoute,) {
+              private activatedRoute: ActivatedRoute,
+              private fb: FormBuilder) {
     this.isLoggedIn = this.authService.getIsLoggedIn();
+
+    this.article = {
+      text: '',
+      comments: [],
+      commentsCount: 0,
+      id: '',
+      title: '',
+      description: '',
+      image: '',
+      date: '',
+      category: '',
+      url: ''
+    }
+
+    this.commentsParams = {
+      offset: 0,
+      article: '',
+    }
   }
 
   ngOnInit() {
-    this.authService.isLoggedIn$
+    this.subs.add(this.authService.isLoggedIn$
       .subscribe(isLoggedIn => {
         this.isLoggedIn = isLoggedIn;
-      });
+      }));
 
-    this.activatedRoute.params
+    this.commentForm = this.fb.group({
+      comment: ['', Validators.required],
+    });
+
+    this.subs.add(this.activatedRoute.params
       .subscribe(params => {
         this.articlesService.getArticle(params['url'])
           .subscribe(article => {
-              this.article = article;
+            this.article = article;
+            this.commentsParams.article = this.article.id;
+            this.comments.comments = this.article.comments;
+            this.comments.allCount = this.article.commentsCount;
           });
 
-        console.log(this.article);
-
-        if (this.article.comments && this.article.comments?.length > 3) {
-          this.articlesService.getComments(this.commentsParams)
-            .subscribe(comments => {
-              this.comments = comments;
-            });
+        if (this.comments.allCount && this.comments.allCount > 3) {
+          this.commentsParams.offset = this.comments.allCount - 3;
         } else {
-          this.comments.comments = this.article.comments;
-          this.comments.allCount = this.article.commentsCount;
+          this.commentsParams.offset = 0;
         }
 
         this.articlesService.getRelatedArticles(params['url'])
@@ -64,6 +99,109 @@ export class ArticleComponent implements OnInit {
               this.relatedArticles = articles;
             }
           });
-      });
+      }));
+  }
+
+  addComments() {
+    if (this.commentsParams.offset && this.comments.allCount) {
+      if (this.comments.allCount > 10) {
+        this.commentsParams.offset = this.commentsParams.offset - 10;
+      } else {
+        this.commentsParams.offset = 0;
+      }
+    }
+    this.getComments();
+  }
+
+  addComment() {
+    if (this.commentForm.valid) {
+      this.subs.add(this.articlesService.addComment({text: this.textAreaElement.nativeElement.value, article: this.article.id})
+        .subscribe({
+          next: (response) => {
+            if (response.error) {
+              this._snackBar.open(response.message);
+            } else {
+              if (this.comments.allCount && this.commentsParams.offset) {
+                this.textAreaElement.nativeElement.value = '';
+                if (this.commentsParams.offset > 0) {
+                  this.commentsParams.offset++;
+                }
+
+                this.getComments();
+                this._snackBar.open('Ваш комментарий успешно опубликован!');
+              }
+            }
+          },
+
+          error: (errorResponse: HttpErrorResponse) => {
+            if (errorResponse.error && errorResponse.error.message) {
+              this._snackBar.open(errorResponse.error.message);
+            } else {
+              this._snackBar.open('Ошибка добавления комментария');
+            }
+          }
+        }));
+    } else {
+      this.textAreaElement.nativeElement.style.borderColor = 'red';
+      this._snackBar.open('Чтобы оставить комментарий заполните поле');
+      setTimeout(() => {
+        this.textAreaElement.nativeElement.style.borderColor = '';
+      }, 2700);
+    }
+  }
+
+  addActionForComment(action: string, commentId: string) {
+    if (this.isLoggedIn) {
+      this.subs.add(this.articlesService.addAction(action, commentId)
+        .subscribe({
+          next: (response) => {
+            if (response.error) {
+              this._snackBar.open(response.message);
+            } else {
+              this.articlesService.getActionForComments(action)
+                .subscribe((response) => {
+                  if (response && response.length > 0) {
+                    this.actionsForComments = response;
+                  }
+                  this.getComments();
+                });
+            }
+          },
+
+          error: (errorResponse: HttpErrorResponse) => {
+            if (errorResponse.error && errorResponse.error.message) {
+              this._snackBar.open(errorResponse.error.message);
+            } else {
+              this._snackBar.open('Ошибка добавления реакции');
+            }
+          }
+        }));
+    } else {
+      this._snackBar.open('Чтобы оставить реакцию или пожаловаться необходимо авторизоваться');
+    }
+  }
+
+  formatingDate(data: string): string {
+    return new Date(data).toLocaleString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).replace(',', '');
+  }
+
+  getComments() {
+    this.subs.add(this.articlesService.getComments(this.commentsParams)
+      .subscribe(comments => {
+        if (comments && comments.comments && comments.comments.length > 0) {
+          this.comments = comments;
+        }
+      }));
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 }

@@ -9,9 +9,15 @@
         <input class="input" type="text" placeholder="Ваше имя" formControlName="name"
                [ngStyle]="{'border-color': signupForm.get('name')?.invalid && (signupForm.get('name')?.touched || signupForm.get('name')?.dirty) ? 'red' : ''}">
         @if (signupForm.get('name')?.invalid && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)) {
-          <div class="text-danger">
-            Это поле обязательно к заполнению
-          </div>
+          @if (signupForm.get('name')?.hasError('required')) {
+            <div class="text-danger">
+              Это поле обязательно к заполнению
+            </div>
+          } @else if (signupForm.get('name')?.hasError('pattern')) {
+            <div class="text-danger text-danger-last">
+              Каждое слово должно начинаться с заглавной буквы
+            </div>
+          }
         }
 
         <input class="input" type="text" placeholder="Электронная почта" formControlName="email"
@@ -28,8 +34,8 @@
           }
         }
 
-        <input class="input last-input" type="text" placeholder="Пароль" formControlName="password"
-               [ngStyle]="{'border-color': signupForm.get('password')?.invalid && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty) ? 'red' : ''}">
+          <input class="input last-input" type="password" placeholder="Пароль" formControlName="password"
+                 [ngStyle]="{'border-color': signupForm.get('password')?.invalid && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty) ? 'red' : ''}">
 
         @if (signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)) {
           @if (signupForm.get('password')?.hasError('required')) {
@@ -45,7 +51,7 @@
 
         <label for="agree">
           <input type="checkbox" id="agree" formControlName="agree">
-          Я принимаю <span>условия пользовательского соглашения</span> и даю <span>согласие на обработку персональных данных</span>.
+          Я принимаю <span routerLink="/policy" fragment="user-agreement">условия пользовательского соглашения</span> и даю <span routerLink="/policy" fragment="personal-data">согласие на обработку персональных данных</span>.
           @if (signupForm.get('agree')?.invalid && (signupForm.get('agree')?.dirty || signupForm.get('agree')?.touched)) {
             <div class="text-danger">
               Это поле обязательно к заполнению
@@ -58,7 +64,7 @@
         Зарегистрироваться
       </button>
 
-       <div class="auth-additional-text">
+      <div class="auth-additional-text">
         Уже есть аккаунт?&nbsp; <a routerLink="/login">Войдите</a>
       </div>
     </div>

@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .auth {
   padding-top: 120px;
@@ -6,17 +7,14 @@
 
   .container {
     display: flex;
-    align-items: center;
+    align-items: start;
 
     .auth-content {
       margin-right: 185px;
 
       .auth-title {
         margin-bottom: 40px;
-        font-family: Lora, sans-serif;
-        font-weight: 400;
-        font-size: 36px;
-        color: $main-blue-color;
+        @include head-lora-36;
       }
 
       .auth-form {
@@ -45,6 +43,7 @@
           font-weight: 400;
 
           span {
+            cursor: pointer;
             color: $main-blue-color;
             text-decoration: underline;
           }

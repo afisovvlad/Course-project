@@ -66,6 +66,13 @@
           display: flex;
           column-gap: 18px;
 
+          a[href^="mailto:"] {
+            font-weight: 400;
+            color: $main-dark-color;
+            display: flex;
+            column-gap: 18px;
+          }
+
           .footer-line-middle-group-text-icon {
             cursor: pointer;
           }

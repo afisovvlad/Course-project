@@ -7,6 +7,9 @@ import {ArticlesType} from '../../../types/articles.type';
 import {ActiveParamsType} from '../../../types/active-params.type';
 import {CommentsParamsType} from '../../../types/comments-params.type';
 import {CommentsResponseType} from '../../../types/comments-response.type';
+import {AddCommentParamsType} from '../../../types/add-comment-params.type';
+import {DefaultResponseType} from '../../../types/default-response.type';
+import {ActionsCommentType} from '../../../types/actions-comment.type';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +39,25 @@ export class ArticlesService {
   getComments(params: CommentsParamsType): Observable<CommentsResponseType> {
     return this.http.get<CommentsResponseType>(environment.api + 'comments', {
       params: params,
+    });
+  }
+
+  addComment(params: AddCommentParamsType): Observable<DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(environment.api + 'comments', {
+      text: params.text,
+      article: params.article,
+    });
+  }
+
+  addAction(action: string, commentId: string): Observable<DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(environment.api + 'comments/' + commentId + '/apply-action', {
+      action: action
+    });
+  }
+
+  getActionForComments(articleId: string): Observable<ActionsCommentType[]> {
+    return this.http.post<ActionsCommentType[]>(environment.api + 'comments/article-comment-actions', {
+      articleId: articleId
     });
   }
 }

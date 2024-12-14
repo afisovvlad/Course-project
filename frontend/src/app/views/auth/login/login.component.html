@@ -14,7 +14,7 @@
           </div>
         }
 
-        <input class="input last-input" type="text" placeholder="Пароль" formControlName="password"
+        <input class="input last-input" type="password" placeholder="Пароль" formControlName="password"
                [ngStyle]="{'border-color': loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty) ? 'red' : ''}">
         @if (loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)) {
           <div class="text-danger text-danger-last">

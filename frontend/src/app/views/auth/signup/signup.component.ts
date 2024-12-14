@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -7,6 +7,7 @@ import {DefaultResponseType} from '../../../../types/default-response.type';
 import {LoginResponseType} from '../../../../types/login-response.type';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgStyle} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -19,8 +20,10 @@ import {NgStyle} from '@angular/common';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   signupForm!: FormGroup;
+
+  private loginSubscription!: Subscription;
 
   private _snackBar = inject(MatSnackBar);
 
@@ -31,7 +34,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.signupForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern(/^([A-ZА-Я][a-zа-я]*(\s|$))*$/)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]],
       agree: [false, [Validators.requiredTrue]]
@@ -40,7 +43,7 @@ export class SignupComponent implements OnInit {
 
   signup(): void {
     if (this.signupForm.valid) {
-      this.authService.signup(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password)
+      this.loginSubscription = this.authService.signup(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password)
         .subscribe({
           next: ((data: DefaultResponseType | LoginResponseType) => {
             if ((data as DefaultResponseType).error !== undefined) {
@@ -74,4 +77,7 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
+  }
 }

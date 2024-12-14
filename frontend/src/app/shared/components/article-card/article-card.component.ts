@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ServiceType} from '../../../../types/service.type';
 import {RouterLink} from '@angular/router';
 import {ArticleType} from '../../../../types/article.type';
@@ -13,7 +13,7 @@ import {environment} from '../../../../environments/environment.development';
   templateUrl: './article-card.component.html',
   styleUrl: './article-card.component.scss'
 })
-export class ArticleCardComponent implements OnInit {
+export class ArticleCardComponent {
   // @ts-ignore
   @Output() detailServiceCategory = new EventEmitter()<string>;
   isArticleCard: boolean = true;
@@ -23,9 +23,6 @@ export class ArticleCardComponent implements OnInit {
   @Input() article: ArticleType | null = null;
 
   constructor() {
-  }
-
-  ngOnInit() {
     this.isArticleCard = !this.serviceCard;
   }
 

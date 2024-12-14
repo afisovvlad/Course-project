@@ -4,6 +4,72 @@
     <router-outlet></router-outlet>
   </div>
   <div class="footer-container">
-    <app-footer></app-footer>
+    <app-footer (callModal)="callModal()"></app-footer>
   </div>
+
+  <ng-template #consultationDialog>
+    <div class="service-dialog">
+      @if (!successfulConsultationRequest) {
+        <div class="dialog-title">
+          Закажите бесплатную консультацию!
+        </div>
+
+        <form class="dialog-form" [formGroup]="consultationForm">
+          <input type="text" class="input" placeholder="Ваше имя" formControlName="name"
+                 [ngStyle]="{'border-color': consultationForm.get('name')?.invalid && (consultationForm.get('name')?.touched || consultationForm.get('name')?.dirty) ? 'red' : ''}">
+          @if (consultationForm.get('name')?.hasError('required') && (consultationForm.get('name')?.touched || consultationForm.get('name')?.dirty)) {
+            <div class="text-danger">
+              Введите Ваше имя
+            </div>
+          }
+
+          <input type="text" class="input" placeholder="Ваш номер телефона" prefix="+7" mask="(000) 000 00 00"
+                 formControlName="phone"
+                 [ngStyle]="{'border-color': consultationForm.get('phone')?.invalid && (consultationForm.get('phone')?.touched || consultationForm.get('phone')?.dirty) ? 'red' : ''}">
+
+          @if (consultationForm.get('phone')?.hasError('required') && (consultationForm.get('phone')?.touched || consultationForm.get('phone')?.dirty)) {
+            <div class="text-danger">
+              Введите номер телефона
+            </div>
+          } @else if (consultationForm.get('phone')?.hasError('minlength')) {
+            <div class="text-danger">
+              Введите корректный номер телефона
+            </div>
+          }
+        </form>
+
+        <button class="button dialog-button" (click)="consultationRequest()">
+          Заказать консультацию
+        </button>
+
+        @if (unsuccessfulConsultationRequest) {
+          <div class="text-danger"> {{ unsuccessfulConsultationRequest }}</div>
+        }
+
+      } @else {
+        <div class="dialog-title">Спасибо за вашу заявку!</div>
+
+        <div class="service-dialog-description">
+          Мы свяжемся с вами при первой же возможности.
+        </div>
+
+        <button class="button successful-request-button" (click)="closeConsultationModal()">
+          Окей
+        </button>
+      }
+
+      <button class="dialog-close" (click)="closeConsultationModal()">
+        <svg width="16.000000" height="16.000000" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip17_1878)">
+            <rect id="Х" rx="0.000000" width="13.187500" height="13.187500" transform="translate(1.406250 2.406250)"
+                  fill="#FFFFFF" fill-opacity="0"/>
+            <line id="Line 4" x1="1.582031" y1="2.296387" x2="14.310059" y2="15.024414" stroke="#BEBEBE"
+                  stroke-opacity="1.000000" stroke-width="1.000000"/>
+            <line id="Line 5" x1="14.277100" y1="2.276123" x2="1.549072" y2="15.004150" stroke="#BEBEBE"
+                  stroke-opacity="1.000000" stroke-width="1.000000"/>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </ng-template>
 </div>

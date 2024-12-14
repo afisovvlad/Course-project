@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../core/services/auth.service';
@@ -7,6 +7,7 @@ import {LoginResponseType} from '../../../../types/login-response.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgStyle} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +20,10 @@ import {NgStyle} from '@angular/common';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
+
+  private loginSubscription!: Subscription;
 
   private _snackBar = inject(MatSnackBar);
 
@@ -39,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value.email, this.loginForm.value.password, !!this.loginForm.value.rememberMe)
+      this.loginSubscription = this.authService.login(this.loginForm.value.email, this.loginForm.value.password, !!this.loginForm.value.rememberMe)
         .subscribe({
           next: ((data: DefaultResponseType | LoginResponseType) => {
             if ((data as DefaultResponseType).error !== undefined) {
@@ -57,7 +60,7 @@ export class LoginComponent implements OnInit {
             this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
             this.authService.userId = loginResponse.userId;
             this._snackBar.open('Вы успешно авторизовались');
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home']).then();
           }),
 
           error: (errorResponse: HttpErrorResponse) => {
@@ -71,5 +74,9 @@ export class LoginComponent implements OnInit {
     } else {
       this.loginForm.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
   }
 }
