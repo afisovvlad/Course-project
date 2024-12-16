@@ -56,8 +56,10 @@ export class ArticlesService {
   }
 
   getActionForComments(articleId: string): Observable<ActionsCommentType[]> {
-    return this.http.post<ActionsCommentType[]>(environment.api + 'comments/article-comment-actions', {
-      articleId: articleId
+    return this.http.get<ActionsCommentType[]>(environment.api + 'comments/article-comment-actions', {
+      params: {
+        articleId: articleId,
+      }
     });
   }
 }

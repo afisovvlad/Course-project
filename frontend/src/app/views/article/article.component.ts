@@ -158,7 +158,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
             if (response.error) {
               this._snackBar.open(response.message);
             } else {
-              this.articlesService.getActionForComments(action)
+              this.articlesService.getActionForComments(this.article.id)
                 .subscribe((response) => {
                   if (response && response.length > 0) {
                     this.actionsForComments = response;
