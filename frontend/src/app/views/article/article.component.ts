@@ -13,6 +13,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ActionsCommentType} from '../../../types/actions-comment.type';
 import {Subscription} from 'rxjs';
+import {ActionType} from '../../../types/action.type';
 
 @Component({
   selector: 'app-article',
@@ -39,6 +40,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   private _snackBar = inject(MatSnackBar);
 
   private subs: Subscription = new Subscription();
+  protected readonly actionType = ActionType;
 
   @ViewChild('textAreaElement') textAreaElement!: ElementRef<HTMLTextAreaElement>;
 
@@ -85,13 +87,24 @@ export class ArticleComponent implements OnInit, OnDestroy {
             this.commentsParams.article = this.article.id;
             this.comments.comments = this.article.comments;
             this.comments.allCount = this.article.commentsCount;
-          });
 
-        if (this.comments.allCount && this.comments.allCount > 3) {
-          this.commentsParams.offset = this.comments.allCount - 3;
-        } else {
-          this.commentsParams.offset = 0;
-        }
+            if (this.isLoggedIn) {
+              this.articlesService.getActionForComments(this.article.id)
+                .subscribe((response) => {
+                  if (response && response.length > 0) {
+                    this.actionsForComments = response;
+                  }
+                  this.getComments();
+                });
+              this.findActiveAction();
+            }
+
+            if (this.comments.allCount && this.comments.allCount > 3) {
+              this.commentsParams.offset = this.comments.allCount - 3;
+            } else {
+              this.commentsParams.offset = 0;
+            }
+          });
 
         this.articlesService.getRelatedArticles(params['url'])
           .subscribe(articles => {
@@ -104,7 +117,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   addComments() {
     if (this.commentsParams.offset && this.comments.allCount) {
-      if (this.comments.allCount > 10) {
+      if (this.commentsParams.offset > 10) {
         this.commentsParams.offset = this.commentsParams.offset - 10;
       } else {
         this.commentsParams.offset = 0;
@@ -115,18 +128,20 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   addComment() {
     if (this.commentForm.valid) {
-      this.subs.add(this.articlesService.addComment({text: this.textAreaElement.nativeElement.value, article: this.article.id})
+      this.subs.add(this.articlesService.addComment({
+        text: this.textAreaElement.nativeElement.value,
+        article: this.article.id
+      })
         .subscribe({
           next: (response) => {
             if (response.error) {
               this._snackBar.open(response.message);
             } else {
-              if (this.comments.allCount && this.commentsParams.offset) {
-                this.textAreaElement.nativeElement.value = '';
-                if (this.commentsParams.offset > 0) {
+              if (this.commentsParams.offset !== undefined) {
+                this.commentForm.reset();
+                if (this.comments.allCount && this.comments.allCount >= 3) {
                   this.commentsParams.offset++;
                 }
-
                 this.getComments();
                 this._snackBar.open('Ваш комментарий успешно опубликован!');
               }
@@ -150,7 +165,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }
   }
 
-  addActionForComment(action: string, commentId: string) {
+  addActionForComment(action: ActionType, commentId: string) {
     if (this.isLoggedIn) {
       this.subs.add(this.articlesService.addAction(action, commentId)
         .subscribe({
@@ -158,13 +173,18 @@ export class ArticleComponent implements OnInit, OnDestroy {
             if (response.error) {
               this._snackBar.open(response.message);
             } else {
-              this.articlesService.getActionForComments(this.article.id)
-                .subscribe((response) => {
-                  if (response && response.length > 0) {
-                    this.actionsForComments = response;
-                  }
-                  this.getComments();
-                });
+              if (action !== this.actionType.violate) {
+                this._snackBar.open('Ваш голос учтен');
+                this.articlesService.getActionForComments(this.article.id)
+                  .subscribe((response) => {
+                    if (response) {
+                      this.actionsForComments = response;
+                      this.getComments();
+                    }
+                  });
+              } else {
+                this._snackBar.open('Жалоба отправлена');
+              }
             }
           },
 
@@ -197,8 +217,25 @@ export class ArticleComponent implements OnInit, OnDestroy {
       .subscribe(comments => {
         if (comments && comments.comments && comments.comments.length > 0) {
           this.comments = comments;
+          this.findActiveAction();
         }
       }));
+  }
+
+  findActiveAction() {
+    if (this.isLoggedIn) {
+      this.actionsForComments.forEach(item => {
+        const findComment = this.comments.comments?.find(comment => comment.id === item.comment);
+        if (findComment) {
+          if (!findComment.activeAction) {
+            findComment.activeAction = item.action;
+          } else {
+            findComment.activeAction = '';
+            console.log(findComment);
+          }
+        }
+      });
+    }
   }
 
   ngOnDestroy() {

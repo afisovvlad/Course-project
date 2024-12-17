@@ -10,6 +10,7 @@ import {CommentsResponseType} from '../../../types/comments-response.type';
 import {AddCommentParamsType} from '../../../types/add-comment-params.type';
 import {DefaultResponseType} from '../../../types/default-response.type';
 import {ActionsCommentType} from '../../../types/actions-comment.type';
+import {ActionType} from '../../../types/action.type';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class ArticlesService {
     });
   }
 
-  addAction(action: string, commentId: string): Observable<DefaultResponseType> {
+  addAction(action: ActionType, commentId: string): Observable<DefaultResponseType> {
     return this.http.post<DefaultResponseType>(environment.api + 'comments/' + commentId + '/apply-action', {
       action: action
     });
