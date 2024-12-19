@@ -65,7 +65,7 @@ export class MainComponent implements OnInit, OnDestroy {
         items: 1
       }
     }
-  }
+  };
 
   reviewsCustomOptions: OwlOptions = {
     loop: true,
@@ -80,9 +80,8 @@ export class MainComponent implements OnInit, OnDestroy {
         items: 3
       }
     }
-  }
+  };
 
-  orderDialogRef: MatDialogRef<any> | null = null;
   servicesArr: ServiceType[] = [
     {
       image: '/images/services-image-1.png',
@@ -109,6 +108,8 @@ export class MainComponent implements OnInit, OnDestroy {
       price: 'От 750₽'
     },
   ];
+
+  orderDialogRef: MatDialogRef<any> | null = null;
   unsuccessfulOrderRequest: string = '';
   successfulOrderRequest: boolean = false;
   orderSelectElement: HTMLSelectElement | null = null;

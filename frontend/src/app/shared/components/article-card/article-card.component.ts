@@ -16,17 +16,19 @@ import {environment} from '../../../../environments/environment.development';
 export class ArticleCardComponent {
   // @ts-ignore
   @Output() detailServiceCategory = new EventEmitter()<string>;
-  isArticleCard: boolean = true;
+  isArticleCard: boolean = false;
   environment = environment;
 
   @Input() serviceCard: ServiceType | null = null;
   @Input() article: ArticleType | null = null;
 
   constructor() {
-    this.isArticleCard = !this.serviceCard;
+    setTimeout(() => {
+      this.isArticleCard = !this.serviceCard;
+    }, 0);
   }
 
-  detailsService (category: string) {
+  detailsService(category: string) {
     this.detailServiceCategory.emit(category);
   }
 }

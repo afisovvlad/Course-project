@@ -116,13 +116,13 @@
 
       <div class="services-items">
         @for (service of servicesArr; track service) {
-          <app-article-card (detailServiceCategory)="showModalService($event)"
-                            [serviceCard]="service"></app-article-card>
+          <app-article-card [serviceCard]="service"
+            (detailServiceCategory)="showModalService($event)"></app-article-card>
         }
       </div>
     </section>
 
-    <section class="advantages" id="advantages" #advantages>
+    <section class="advantages" id="advantages">
       <div class="advantages-image">
         <img src="/images/advantages-image.png" alt="">
       </div>

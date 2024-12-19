@@ -64,7 +64,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }
 
     this.commentsParams = {
-      offset: 0,
+      offset: 3,
       article: '',
     }
   }
@@ -94,15 +94,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
                   if (response && response.length > 0) {
                     this.actionsForComments = response;
                   }
-                  this.getComments();
                 });
               this.findActiveAction();
-            }
-
-            if (this.comments.allCount && this.comments.allCount > 3) {
-              this.commentsParams.offset = this.comments.allCount - 3;
-            } else {
-              this.commentsParams.offset = 0;
             }
           });
 
@@ -116,14 +109,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   addComments() {
-    if (this.commentsParams.offset && this.comments.allCount) {
-      if (this.commentsParams.offset > 10) {
-        this.commentsParams.offset = this.commentsParams.offset - 10;
-      } else {
-        this.commentsParams.offset = 0;
-      }
-    }
     this.getComments();
+    if (this.commentsParams.offset) {
+      this.commentsParams.offset += 10;
+    }
   }
 
   addComment() {
@@ -139,10 +128,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
             } else {
               if (this.commentsParams.offset !== undefined) {
                 this.commentForm.reset();
-                if (this.comments.allCount && this.comments.allCount >= 3) {
-                  this.commentsParams.offset++;
-                }
-                this.getComments();
+                this.commentsParams.offset = 0;
+                this.getComments(true);
                 this._snackBar.open('Ваш комментарий успешно опубликован!');
               }
             }
@@ -179,7 +166,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
                   .subscribe((response) => {
                     if (response) {
                       this.actionsForComments = response;
-                      this.getComments();
+                      this.findActiveAction();
                     }
                   });
               } else {
@@ -212,11 +199,17 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }).replace(',', '');
   }
 
-  getComments() {
+  getComments(addComment: boolean = false) {
     this.subs.add(this.articlesService.getComments(this.commentsParams)
       .subscribe(comments => {
-        if (comments && comments.comments && comments.comments.length > 0) {
-          this.comments = comments;
+        if (comments && comments.comments && comments.comments.length > 0 && this.comments.comments) {
+          if (addComment) {
+            this.comments.comments = comments.comments.slice(0, 3);
+            this.comments.allCount = comments.allCount;
+            this.commentsParams.offset = 3;
+          } else {
+            this.comments.comments = this.comments.comments.concat(comments.comments);
+          }
           this.findActiveAction();
         }
       }));
@@ -227,12 +220,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       this.actionsForComments.forEach(item => {
         const findComment = this.comments.comments?.find(comment => comment.id === item.comment);
         if (findComment) {
-          if (!findComment.activeAction) {
-            findComment.activeAction = item.action;
-          } else {
-            findComment.activeAction = '';
-            console.log(findComment);
-          }
+          findComment.activeAction = findComment.activeAction ? '' : findComment.activeAction = item.action;
         }
       });
     }
