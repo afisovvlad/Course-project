@@ -165,7 +165,42 @@ export class ArticleComponent implements OnInit, OnDestroy {
                 this.articlesService.getActionForComments(this.article.id)
                   .subscribe((response) => {
                     if (response) {
+                      const comment = this.comments.comments?.find(comment => comment.id === commentId);
+
+                      // if (action === this.actionType.like) {
+                      //   const foundElement = this.actionsForComments.find(item => item.comment === commentId);
+                      //   if (foundElement && foundElement.action === this.actionType.dislike) {
+                      //     if (comment) {
+                      //       comment.dislikesCount--;
+                      //     }
+                      //   }
+                      // } else {
+                      //   const foundElement = this.actionsForComments.find(item => item.comment === commentId);
+                      //   if (foundElement && foundElement.action === this.actionType.like) {
+                      //     if (comment) {
+                      //       comment.likesCount--;
+                      //     }
+                      //   }
+                      // }
+
                       this.actionsForComments = response;
+
+                      if (action === this.actionType.like) {
+                        const foundElement = this.actionsForComments.find(item => item.comment === commentId);
+                        if (foundElement) {
+                          if (comment) comment.likesCount--;
+                        } else {
+                          if (comment) comment.likesCount++;
+                        }
+                      } else {
+                        const foundElement = this.actionsForComments.find(item => item.comment === commentId);
+                        if (foundElement) {
+                          if (comment) comment.dislikesCount--;
+                        } else {
+                          if (comment) comment.dislikesCount++;
+                        }
+                      }
+
                       this.findActiveAction();
                     }
                   });
